@@ -6,7 +6,8 @@ import AdminNavbar from '../AdminNavbar';
 import { BulkUploadQuestion } from '../../middleware/QuestionApi';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { FindQuiz } from '../../middleware/api';
+import { fetchQuizById } from '../../middleware/api';
+import { useDispatch } from 'react-redux';
 
 const UploadBulkQuiz = () => {
   const location = useLocation();
@@ -19,14 +20,15 @@ const UploadBulkQuiz = () => {
   const navigate = useNavigate();
   const [importedQuestions, setImportedQuestions] = useState([]);
   const allowedFileTypes = ['.xlsx'];
+const dispatch = useDispatch();
 
   useEffect(() => {
     fetchQuizId(topicId)
   })
 
   const fetchQuizId = async (topicId) => {
-    const response = await FindQuiz(topicId)
-    setQuizId(response);
+    dispatch(fetchQuizById(topicId));
+    // setQuizId(response);
   }
 
   const handleDragOver = (event) => {

@@ -8,28 +8,28 @@ import { FaTrashCan } from "react-icons/fa6";
 import { FaUpload } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import '../../Styles/CreateQuiz.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ValidationQuizTitle, ValidationDuration, ValidationGrade, ValidationAttempts } from '../../utils/ValidationCreateQuiz';
-import { DeleteQuizDetails, FindQuiz, createquiz } from '../../middleware/api';
+import { DeleteQuizDetails, fetchQuizById, createquiz } from '../../middleware/api';
 import { DeleteQuestion, GetAllQuestion, GetOpenEditQuestionModal, PostSingleQuestion, UpdateQuestion } from '../../middleware/QuestionApi';
 // import { getQuizById } from '../../middleware/api';
 import { GetQuizDetails } from '../../middleware/api';
 // import { setAttempts } from '../../actions/CreateQuizAction';
 import { PutQuizDetails } from '../../middleware/api';
-import { setAttempts } from '../../actions/CreateQuizAction';
+import { setAttempts, setQuizDetailsRequest } from '../../actions/CreateQuizAction';
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import BasicPagination from '../../components/QuizComponents/Pagination';
-
+import { useSelector } from 'react-redux';
 
 
 export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
-
+    const dispatch = useDispatch();
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const questionsPerPage = 5;
@@ -57,6 +57,7 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
     const [showQuizDeleteModal, setShowQuizDeleteModal] = useState(false);
     const [inputQuizTitle, setInputQuizTitle] = useState('');
     const [errordeletequiz, setErrorDeleteQuiz] = useState('');
+
     const navigate = useNavigate();
 
     const [bulkQuizId, setBulkQuizId] = useState('')
@@ -108,9 +109,11 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
     const handleUploadClick = async (e) => {
         e.preventDefault()
         try {
-            const response = await createquiz(quizDetails);
-            setBulkQuizId(response);
-            navigate(`/upload?quizId=${quizId}&topicId=${topicId}`);
+            // const response = await createquiz(quizDetails);
+            // setBulkQuizId(response);
+            console.log("quiz det:",quizDetails)
+            dispatch(setQuizDetailsRequest(quizDetails))
+            // navigate(`/upload?quizId=${quizId}&topicId=${topicId}`);
 
         } catch (error) {
             console.log(error.message)
@@ -464,7 +467,7 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
     const handleBulkUpload = async (topicId) => {
 
         try {
-            const quizId = await FindQuiz(topicId)
+            dispatch(fetchQuizById(topicId));
             navigate("/upload", { state: { quiz: quizId } });
         } catch (error) {
             console.log("Error fetching quiz: ", error)
@@ -516,7 +519,7 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
     };
 
     const handleNavigate = () =>{
-        navigate('/');
+        navigate('/')
     }
 
     return (

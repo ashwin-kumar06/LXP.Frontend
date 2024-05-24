@@ -27,16 +27,14 @@ function App() {
   return (
       <Routes>
         <Route path="/quiz" element={<QuizEditor />} />
-        {/* <Route path="/" element={
+
+        <Route path="/" element={
           <Provider store={store}>
-            <div>
-            <CoursePage/>
-            </div>
-          </Provider>
-        }/> */}
-        
-        
-        <Route path="/" element={<CoursePage/>}/>
+          <div>
+          <CoursePage/>
+          </div>
+        </Provider>
+        }/>
         <Route path="/createquiz" element={<CreateQuizView/>}/>  
         <Route path='/questiontemplate' element={<QuestionTemplateView/>}/>
         <Route path='/getallfeedback' element={<GetAllFeedbacks/>}/>

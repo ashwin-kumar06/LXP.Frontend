@@ -12,16 +12,18 @@ import GetTopicFeedbackReducer from '../reducers/GetTopicFeedbackReducer';
 import { GetTopicFeedbackApi } from '../middleware/GetTopicFeedbackApi';
 import { GetAllQuestion } from '../middleware/QuestionApi';
 import questionReducer from '../reducers/GetAllQuestionReducers';
+import { fetchQuizById , CreateQuiz} from '../middleware/api';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   quizfeedback:QuizFeedbackReducer,
   TopicFeedback:TopicFeedbackReducer,
   fetchfeedback:GetAllFeedbackReducer,
   fetchtopicfeedback:GetTopicFeedbackReducer,
   quiz: quizReducer,
   questions: questionReducer,
+  quizId: quizIdReducer
 });
  
-const store = createStore(rootReducer, applyMiddleware(thunk,QuizFeedbackApi,TopicFeedbackApi,GetAllFeedbackApi,GetTopicFeedbackApi));
+const store = createStore(rootReducer, applyMiddleware(thunk,fetchQuizById,QuizFeedbackApi,TopicFeedbackApi,GetAllFeedbackApi,GetTopicFeedbackApi,CreateQuiz));
  
 export default store;

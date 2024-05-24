@@ -5,21 +5,37 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { IoLogoHtml5 } from "react-icons/io5";
 import { PiFileCssFill } from "react-icons/pi";
 import { useNavigate } from 'react-router-dom';
-import { FindQuiz } from '../../middleware/api';
-
+import { fetchQuizById } from '../../middleware/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchQuizIdRequest } from '../../actions/CreateQuizAction';
 
 function CoursePage() {
+
   const [noQuizTopicId, setNoQuizTopicId] = useState('98f8f96d-844e-4da1-8464-204984cdd8f1');
   const [yesQuizTopicId, setYesQuizTopicId] = useState('e3a895e4-1b3f-45b8-9c0a-98f9c0fa4996')
-  const [quizId, setQuizId] = useState('');
+  const quizId = useSelector((state) => state.quizId.quizId);
+  const isSuccess = useSelector((state) => state.quizId.isSubmitted);
+  const noQuizId = useSelector((state) => state.quizId.noQuiz);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [topicId, setTopicId] = useState('');
 
+
+  // useEffect(() => {
+  //   if(isSuccess){
+  //     navigate(`/createquiz?quizId=${quizId}&topicId=${topicId}`);
+  //   }
+  // });
 
   const handleAddQuiz = async (topicId) => {
-    const id = await FindQuiz(topicId);
-    setQuizId(id);
-    navigate(`/createquiz?quizId=${id}&topicId=${topicId}`);
-  }
+    setTopicId(topicId);
+    dispatch(fetchQuizIdRequest(topicId));
+    // const result = await fetchQuizById(topicId);
+    if (isSuccess) {
+      navigate(`/createquiz?quizId=${quizId}&topicId=${topicId}`);
+    }
+  };
 
   const handleFeedback = (topicId) => {
     try {
@@ -31,9 +47,9 @@ function CoursePage() {
 
   const handleQuizFeedback = async (topicId) => {
     try {
-      const id = await FindQuiz(topicId);
-      setQuizId(id);
-      navigate(`/quizfeedback?quizId=${id}&topicId=${topicId}`);
+      dispatch(fetchQuizById(topicId));
+      // setQuizId(id);
+      // navigate(`/quizfeedback?quizId=${id}&topicId=${topicId}`);
     } catch (error) {
       console.error('Error navigating:', error);
     }

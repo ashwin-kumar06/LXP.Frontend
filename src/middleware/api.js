@@ -1,27 +1,53 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { fetchQuizByIdSuccess, fetchQuizByIdRequest } from '../actions/CreateQuizAction';
+import { setQuizDetailsRequest, setQuizDetailsSuccess,setQuizDetailsFailure, SET_QUIZ_DETAILS_REQUEST } from '../actions/CreateQuizAction';
+import { fetchQuizIdSuccess, fetchQuizIdRequest, fetchQuizIdFailure } from '../actions/CreateQuizAction';
+import { FETCH_QUIZ_ID_REQUEST, FETCH_QUIZ_ID_SUCCESS,FETCH_QUIZ_ID_FAILURE } from '../actions/CreateQuizAction';
 
-export const FindQuiz = async (topicId) => {
-  try {
-    const response = await axios.get(`http://localhost:5199/api/Quiz/topic/${topicId}`);
-    console.log("Api: ",response.data)
-    return response.data;
-  } catch (error) {
-    console.log("Fetching quizid: ",error.message)
+const API_URL = 'http://localhost:5199/api/Quiz/topic/';
+
+export const fetchQuizById = ({dispatch}) => (next) => async (action) => {
+  if (action.type === FETCH_QUIZ_ID_REQUEST){
+    try {
+      console.log("fetch quizId",action.payload);
+      const response = await axios.get(`http://localhost:5199/api/Quiz/topic/${action.payload}`);
+      console.log("api quiz id:",response.data)
+      dispatch(fetchQuizIdSuccess(response.data));
+    } catch (error) {
+      console.log("Fetching quizid: ", error.message);
+      dispatch(fetchQuizIdFailure(error.message));  
+    }
   }
+  return next(action);
+}
+
+export const CreateQuiz = ({ dispatch }) => (next) => async (action) => {
+  if (action.type == SET_QUIZ_DETAILS_REQUEST) {
+    try {
+      console.log("post quiz",action.payload);
+      const response = await axios.post(API_URL,action.payload);
+      console.log('feed Post API Response:', response.data); // Log the response data
+      dispatch(setQuizDetailsSuccess(response.data.data)); // Dispatch success action with the response data                                             
+    } catch (error) {
+      console.error('API Error:', error.message);
+      dispatch(setQuizDetailsFailure(error.message));
+    }
+  }
+  return next(action);
+  
 };
 
-const createquiz = async (quizDetails) => {
-  try {
-    console.log("details", quizDetails);
-    const response = await axios.post('http://localhost:5199/api/Quiz', quizDetails);
-    return response.data;
-  } catch (error) {
-    console.error("Error:", error.message);
-    throw error.message;
-  }
-};
+
+// const createquiz = async (quizDetails) => {
+//   try {
+//     console.log("details", quizDetails);
+//     const response = await axios.post('http://localhost:5199/api/Quiz', quizDetails);
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error:", error.message);
+//     throw error.message;
+//   }
+// };
 
 export const GetQuizDetails = async(quizId) =>{
   try {
@@ -54,21 +80,7 @@ export const DeleteQuizDetails = async(quizId) =>{
     throw error.message;
   }
 }
-// export const getQuizById = () => async dispatch => {
-//   dispatch(fetchQuizByIdRequest());
-//   try {
-//     const response = await axios.get('https://localhost:7005/api/Quiz/e256e8d7-2dc7-4bc9-a4c4-9eea0d3733b6');
-//     dispatch(fetchQuizByIdSuccess(response.data));
-//     console.log("quiz", response.data);
-
-//   } catch (error) {
-//     console.error("Error:", error.message);
-//     throw error.message;
-//   }
-// };
 
 
 
-
-
-export { createquiz };
+// export { createquiz };

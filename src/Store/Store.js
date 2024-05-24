@@ -3,7 +3,8 @@ import { createStore, applyMiddleware } from 'redux';
 // import { thunk } from 'redux-thunk'; // Use named import for thunk
 import quizReducer from '../reducers/CreateQuizReducer';
 import thunk from 'redux-thunk';
-import rootReducer from '../reducers';
+// import rootReducer from '../reducers';
+import { rootReducer } from './configureStore';
 import { createStoreHook } from 'react-redux';
 
 const middleware = [thunk];

@@ -7,7 +7,6 @@ export const QuizFeedbackApi = ({ dispatch }) => (next) => async (action) => {
   if (action.type == CREATE_QUIZFEEDBACK_REQUEST) {
     try {
       console.log("post quiz",action.payload);
-      // Assuming 'action.payload' contains the data you want to senda
       const response = await axios.post(API_URL,action.payload);
       console.log('feed Post API Response:', response.data); // Log the response data
       dispatch(createquizfeedbackSuccess(response.data.data)); // Dispatch success action with the response data                                             
