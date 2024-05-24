@@ -8,7 +8,7 @@
   .col-sm-3{
     font-weight: bold;
   }
-
+  
   #bulklink,#newquelink{
     text-decoration: none;
     color:rgba(128, 128, 128);
@@ -17,7 +17,32 @@
   #questitle{
     color:grey;
   }
+  .question-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 5%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+  }
+  
+  .question-number {
+    margin: 10px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 
+  }
+  .question-details-container{
+    
+    margin-left: 80px;
+    width: 700px;
+  }
   #required{
     color:Red;
   }

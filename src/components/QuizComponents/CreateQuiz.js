@@ -117,6 +117,7 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
         }
     };
 
+
     const closeModal = () => {
         setShowModal(false);
     };
@@ -514,8 +515,15 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
         }
     };
 
+    const handleNavigate = () =>{
+        navigate('/');
+    }
+
     return (
         <div >
+            <div>
+                <button class="btn btn-light" style={{ marginLeft: "95%", marginTop: "5%", backgroundColor: "#365486", color: "white", width: '50' }} onClick={()=>{handleNavigate()}} >Back</button>
+            </div>
             <AdminNavbar />
             <input id='search' type="search" placeholder="Search..." className='search-box' onChange={handleSearchChange} />
             <form className=' main-content'>

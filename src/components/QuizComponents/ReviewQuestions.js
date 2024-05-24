@@ -6,15 +6,18 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { createquizfeedbackRequest, createquizfeedbackSuccess } from '../../actions/QuizFeedbackAction';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import AdminNavbar from './AdminNavbar';
 import { useLocation } from 'react-router-dom';
+import { GetAllQuestion } from '../../middleware/QuestionApi';
 
-export const ReviewQuestions = ({ GetAllQuestion }) => {
+export const ReviewQuestions = ({questions, loading, GetAllQuestion, editQuiz }) => {
+    
+    const [selectedQuestion, setSelectedQuestion] = useState(null);
     const location = useLocation();
     const [error, setError] = useState('');
     const [errorfb, setErrorfb] = useState('');
-    const [loading, setLoading] = useState('');
+    // const [loading, setLoading] = useState('');
     const [showAddfbModal, setShowAddfbModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
     // const [handleTypeChange, setHandleTypeChange] = useState(false);
@@ -34,12 +37,7 @@ export const ReviewQuestions = ({ GetAllQuestion }) => {
         }
 
     };
-    const [questions, setQuestions] = useState({
-        question: '',
-        questionType: '',
-        options: ['', '', '', '', '', '', '', ''],
-        correctOptions: ['', '', '']
-    });
+
     const [fbQuestion, setFbQuestion] = useState({
         question: '',
         questionType: '',
@@ -51,20 +49,18 @@ export const ReviewQuestions = ({ GetAllQuestion }) => {
     // const [questions, setQuestions] = useState([]);
 
     useEffect(() => {
-        const GetAllQuestion = async () => {
-            try {
-                const response = await axios.get(
-                    'http://localhost:5199/api/QuizQuestions/GetAllQuestions'
-                );
-                setQuestions(response.data);
-                console.log(response.data)
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        GetAllQuestion();
+        fetchQuestions(quizId);
     }, []);
+
+    const fetchQuestions = async (quizId) => {
+        
+        try {
+            await GetAllQuestion(quizId);
+            
+        } catch (error) {
+            console.error('Error fetching data:', error)
+        }
+    }
 
     const handleFeedback = () => {
         try {
@@ -94,7 +90,7 @@ export const ReviewQuestions = ({ GetAllQuestion }) => {
         }
 
         const requestBody = {
-            quizId: "22a43258-f99b-4b7b-98d9-40d5a3e09bc3",
+            quizId: quizId,
             question: fbQuestion.question,
             questionType: fbQuestion.questionType,
             options: fbQuestion.options.map((optionText, index) => ({
@@ -129,12 +125,7 @@ export const ReviewQuestions = ({ GetAllQuestion }) => {
         updatedoptions[index] = value;
         setFbQuestion({ ...fbQuestion, options: updatedoptions });
 
-        // if (field === 'correctOptions') {
-        //     setFbQuestion(prevState => ({
-        //         ...prevState,
-        //         correctOptions: [...prevState.correctOptions.slice(0, index), value, ...prevState.correctOptions.slice(index + 1)]
-        //     }));
-        // } else {
+
         setFbQuestion(prevState => ({
             ...prevState,
             [field]: index === -1 ? value : [...prevState[field].slice(0, index), value, ...prevState[field].slice(index + 1)]
@@ -156,56 +147,73 @@ export const ReviewQuestions = ({ GetAllQuestion }) => {
     return (
         <div>
             <AdminNavbar />
-            <div className='question template container' style={{ marginTop: "-47%" }}>
-                {loading && <p>Loading...</p>}
-                {error && <p>Error: {error}</p>}
-                {questions && questions.length > 0 && (
-                    <div>
-                        <h5 style={{ marginTop: "5%" }}>Review Questions</h5>
-                        {questions.map((question, index) => (
-                            <div key={index} className='card mt-3' style={{ backgroundColor: "rgb(237, 231, 231)" }}>
-                                <div className='d-flex justify-content-end'>
+            <div className='question template container' style={{ display: 'flex', marginTop: "-37%" }}>
+                <div className="question-grid-container">
+                    {questions && questions.length > 0 && (
+                        <div className="question-grid">
+                            {questions.map((question, index) => (
+                                <div
+                                    key={index}
+                                    className={`question-number ${question === index ? 'active' : ''}`}
+                                    onClick={() => setSelectedQuestion(index)}
+                                >
+                                    {index + 1}
                                 </div>
-                                <div className="card-body">
-                                    <h5 className="card-title">Question {question.questionNo}:</h5>
+                            ))}
+                        </div>
+                    )}
+                </div>
+                <div className="question-details-container">
+                    {loading && <p>Loading...</p>}
+                    {error && <p>Error: {error}</p>}
+                    {questions && questions.length > 0 && (
+                        <div>
+                            <h5 style={{ marginTop: "5%" }}>Review Questions</h5>
+                            {questions.map((question, index) => (
+                                <div key={index} className='card mt-3' style={{ backgroundColor: "rgb(237, 231, 231)" }}>
+                                    <div className='d-flex justify-content-end'>
+                                    </div>
+                                    <div className="card-body">
+                                        <h5 className="card-title">Question {question.questionNo}:</h5>
 
-                                    <input value={question.question} className='form-control' readOnly />
-                                    <div className="form-group">
-                                        <label>Options:</label>
-                                        {question.options.map((option, index) => (
-                                            <input
-                                                key={index}
-                                                type="text"
-                                                className="form-control mt-2"
-                                                value={option.option}
-                                                readOnly
-                                            />
-                                        ))}
+                                        <input value={question.question} className='form-control' readOnly />
+                                        <div className="form-group">
+                                            <label>Options:</label>
+                                            {question.options.map((option, index) => (
+                                                <input
+                                                    key={index}
+                                                    type="text"
+                                                    className="form-control mt-2"
+                                                    value={option.option}
+                                                    readOnly
+                                                />
+                                            ))}
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Correct Answers:</label>
+                                            {question.options.filter(option => option.isCorrect).map((correctOption, index) => (
+                                                <input
+                                                    key={index}
+                                                    type="text"
+                                                    className="form-control mt-2"
+                                                    value={correctOption.option}
+                                                    readOnly
+                                                />
+                                            ))}
+                                        </div>
                                     </div>
-                                    <div className="form-group">
-                                        <label>Correct Answers:</label>
-                                        {question.options.filter(option => option.isCorrect).map((correctOption, index) => (
-                                            <input
-                                                key={index}
-                                                type="text"
-                                                className="form-control mt-2"
-                                                value={correctOption.option}
-                                                readOnly
-                                            />
-                                        ))}
-                                    </div>
+
                                 </div>
 
-                            </div>
+                            ))}
+                            <button onClick={handleSubmit} className="btn btn-light mt-3 mb-5 float-right" style={{ backgroundColor: "#365486", color: "white" }}>Go to Edit Page</button>
 
-                        ))}
-                        <button onClick={handleSubmit} className="btn btn-light mt-3 mb-5 float-right" style={{ backgroundColor: "#365486", color: "white" }}>Go to Edit Page</button>
-
-                        <button onClick={handleTypeChange} className="btn btn-light mt-3 mb-5 float-right" style={{ backgroundColor: "#365486", color: "white", marginLeft: "74%" }}>Review & Publish</button>
+                            <button onClick={handleTypeChange} className="btn btn-light mt-3 mb-5 float-right" style={{ backgroundColor: "#365486", color: "white", marginLeft: "74%" }}>Review & Publish</button>
 
 
-                    </div>
-                )}
+                        </div>
+                    )}
+                </div>
 
                 <div>
                     <Modal show={showAddfbModal} onHide={handleCloseAddfbQuestionModal}>
@@ -275,5 +283,18 @@ export const ReviewQuestions = ({ GetAllQuestion }) => {
     );
 };
 
+const mapStateToProps = state => {
+    return {
+        questions: state.questions.questions,
+        loading: state.questions.loading,
+      
 
-export default ReviewQuestions
+    };
+};
+
+const mapDispatchToProps = {
+    GetAllQuestion
+    // getQuizById
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (ReviewQuestions)

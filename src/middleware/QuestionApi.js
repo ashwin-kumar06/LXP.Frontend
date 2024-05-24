@@ -29,8 +29,10 @@ export const BulkUploadQuestion = async (files,quizId) => {
 
 
 export const GetAllQuestion = (quizId) => async dispatch => {
+  
   dispatch(fetchQuestionsRequest());
       try {
+        
         const response = await axios.get(`http://localhost:5199/api/QuizQuestions/GetAllQuestionsByQuizId?quizId=${quizId}`);
         dispatch(fetchQuestionsSuccess(response.data));
       } catch (error) {
