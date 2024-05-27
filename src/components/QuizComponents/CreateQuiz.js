@@ -14,10 +14,10 @@ import { useEffect } from 'react';
 import '../../Styles/CreateQuiz.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ValidationQuizTitle, ValidationDuration, ValidationGrade, ValidationAttempts } from '../../utils/ValidationCreateQuiz';
-import { DeleteQuizDetails, fetchQuizById, createquiz } from '../../middleware/api';
-import { DeleteQuestion, GetAllQuestion, GetOpenEditQuestionModal, PostSingleQuestion, UpdateQuestion } from '../../middleware/QuestionApi';
+import { DeleteQuizDetails } from '../../middleware/api';
+import { DeleteQuestion, GetAllQuestion, GetOpenEditQuestionModal, PostSingleQuestion } from '../../middleware/QuestionApi';
 // import { getQuizById } from '../../middleware/api';
-import { GetQuizDetails } from '../../middleware/api';
+import { GetQuizDetails } from '../../middleware/FetchQuizApi';
 // import { setAttempts } from '../../actions/CreateQuizAction';
 import { PutQuizDetails } from '../../middleware/api';
 import { setAttempts, setQuizDetailsRequest } from '../../actions/CreateQuizAction';
@@ -26,10 +26,17 @@ import Alert from '@mui/material/Alert';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import BasicPagination from '../../components/QuizComponents/Pagination';
 import { useSelector } from 'react-redux';
+import { editQuizDetailsRequest } from '../../actions/EditQuizAction';
+import { fetchAllQuizQuestionRequest } from '../../actions/FetchQuizQuestionsAction';
+import { deleteQuizQuestionRequest } from '../../actions/DeleteQuizQuestionAction';
+import { updateQuizQuestionRequest } from '../../actions/UpdateQuizQuestionAction';
 
 
-export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
+export const Home = () => {
+    const quizId = sessionStorage.getItem('quizId');
+    const topicId = sessionStorage.getItem('topicId');
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const questionsPerPage = 5;
@@ -47,22 +54,13 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
     const [errorduration, setErrorDuration] = useState('');
     const [errormark, setErrormark] = useState('');
     const [errorattempts, setErrorAttempt] = useState('');
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-    const quizId = searchParams.get('quizId');
-    const topicId = searchParams.get('topicId');
     const [selectedQuestionType, setSelectedQuestionType] = useState('');
     const [showAddQuestionModal, setShowAddQuestionModal] = useState(false);
     const [showQuizEditModal, setShowQuizEditModal] = useState(false);
     const [showQuizDeleteModal, setShowQuizDeleteModal] = useState(false);
     const [inputQuizTitle, setInputQuizTitle] = useState('');
     const [errordeletequiz, setErrorDeleteQuiz] = useState('');
-
-    const navigate = useNavigate();
-
-    const [bulkQuizId, setBulkQuizId] = useState('')
-    console.log("create quiz Id: ", quizId);
-    const [grade, setGrade] = useState('');
+    const [bulkQuizId, setBulkQuizId] = useState('');
     const [newQuestion, setNewQuestion] = useState({
         question: '',
         questionType: '',
@@ -71,7 +69,6 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
     });
     const [quizDetails, setQuizDetails] = useState({
         topicId: topicId,
-
         nameOfQuiz: '',
         duration: '',
         passMark: '',
@@ -94,11 +91,19 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
     });
     const [isQuizEditable, setIsQuizEditable] = useState(!quizId);
 
+    console.log("create quiz Id: ", quizId);
 
     useEffect(() => {
+        console.log("effect");
         fetchQuestions(quizId);
         fetchQuizData(quizId);
     }, []);
+
+    const questions = useSelector((state) => state.quizQuestions.quizQuestions[0]);
+    const loading = useSelector((state) => state.quizQuestions.loading);
+    const selector = useSelector((state) => state.quizQuestions);
+    console.log("selector", selector);
+    console.log("questions", questions);
 
     const toggleOptions = (event) => {
         event.preventDefault();
@@ -106,18 +111,16 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
         event.target.nextSibling.style.display = showOptions ? 'none' : 'block';
     };
 
-    const handleUploadClick = async (e) => {
-        e.preventDefault()
-        try {
-            // const response = await createquiz(quizDetails);
-            // setBulkQuizId(response);
-            console.log("quiz det:",quizDetails)
-            dispatch(setQuizDetailsRequest(quizDetails))
-            // navigate(`/upload?quizId=${quizId}&topicId=${topicId}`);
-
-        } catch (error) {
-            console.log(error.message)
-        }
+    const handleUploadClick = (e) => {
+        e.preventDefault();
+        console.log("quiz details:", quizDetails);
+        dispatch(setQuizDetailsRequest(quizDetails));
+        // try {
+        //   console.log("quiz det:", quizDetails);
+        //   dispatch(setQuizDetailsRequest(quizDetails));
+        // } catch (error) {
+        //   console.log(error.message);
+        // }
     };
 
 
@@ -234,7 +237,7 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
     const handleSubmit = () => {
         try {
             // await GetAllQuestion();
-            navigate(`/reviewquestions?quizId=${quizId}&topicId=${topicId}`)
+            navigate(`/reviewquestions`)
 
         } catch (error) {
             console.error('Error fetching data:', error)
@@ -271,8 +274,9 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
     }
 
     const fetchQuestions = async (quizId) => {
+        console.log("quiz id varudha");
         try {
-            await GetAllQuestion(quizId);
+            dispatch(fetchAllQuizQuestionRequest(quizId))
         } catch (error) {
             console.error('Error fetching data:', error)
         }
@@ -287,7 +291,8 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
             passMark: parseInt(quizData.passMark)
         };
 
-        PutQuizDetails(updatedQuizData);
+        // PutQuizDetails(updatedQuizData);
+        dispatch(editQuizDetailsRequest(updatedQuizData));
         handleCloseQuizEditModal();
     };
 
@@ -334,8 +339,9 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
     };
 
     const handleDeleteQuestion = (quizQuestionId) => {
-        DeleteQuestion(quizQuestionId);
-        window.location.reload();
+        // DeleteQuestion(quizQuestionId);
+        dispatch(deleteQuizQuestionRequest(quizQuestionId))
+        // window.location.reload();
     };
 
     const handleCloseEditQuestionModal = () => {
@@ -419,11 +425,14 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
             ...updatedQuestion,
             options: updatedOptions,
             questionType: questionType,
-            quizId: quizId
+            quizId: quizId,
+            quizQuestionId: quizQuestionId
         };
 
         if (validateUpdateQuestion()) {
-            UpdateQuestion(quizQuestionId, requestBody);
+            // console.log("request body",requestBody);
+            dispatch(updateQuizQuestionRequest(requestBody))
+            // UpdateQuestion(quizQuestionId, requestBody);
             handleCloseEditQuestionModal();
         }
     };
@@ -451,7 +460,10 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
     const searchFilteredQuestions = questions.filter(question =>
         question.question.toLowerCase().includes(searchTerm) &&
         (!selectedQuestionType || question.questionType === selectedQuestionType)
+
     );
+
+
 
     // Calculate the questions to display on the current page
     const indexOfLastQuestion = currentPage * questionsPerPage;
@@ -467,7 +479,7 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
     const handleBulkUpload = async (topicId) => {
 
         try {
-            dispatch(fetchQuizById(topicId));
+            // dispatch(fetchQuizById(topicId));
             navigate("/upload", { state: { quiz: quizId } });
         } catch (error) {
             console.log("Error fetching quiz: ", error)
@@ -518,14 +530,16 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
         }
     };
 
-    const handleNavigate = () =>{
+    const handleNavigate = () => {
+        sessionStorage.removeItem("quizId");
+        sessionStorage.removeItem("topicId");
         navigate('/')
     }
 
     return (
         <div >
             <div>
-                <button class="btn btn-light" style={{ marginLeft: "95%", marginTop: "5%", backgroundColor: "#365486", color: "white", width: '50' }} onClick={()=>{handleNavigate()}} >Back</button>
+                <button class="btn btn-light" style={{ marginLeft: "95%", marginTop: "5%", backgroundColor: "#365486", color: "white", width: '50' }} onClick={() => { handleNavigate() }} >Back</button>
             </div>
             <AdminNavbar />
             <input id='search' type="search" placeholder="Search..." className='search-box' onChange={handleSearchChange} />
@@ -588,7 +602,6 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
 
             {/* --------------------------------------------------------------*/}
             <div className='question template container'>
-                {loading && <p>Loading...</p>}
                 {error && <p>Error: {error}</p>}
                 {/* {questions && questions.length > 0 && ( */}
                 {currentQuestions.length > 0 ? (
@@ -939,18 +952,4 @@ export const Home = ({ questions, loading, GetAllQuestion, editQuiz }) => {
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        questions: state.questions.questions,
-        loading: state.questions.loading,
-        error: state.questions.error,
-        editQuiz: state.editQuiz
-    };
-};
-
-const mapDispatchToProps = {
-    GetAllQuestion,
-    // getQuizById
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;

@@ -1,44 +1,39 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import QuizEditorView from './View/QuizEditorView';
 import CreateQuizView from './View/CreateQuizView';
 import QuizEditor from './components/QuizEditor';
-import { QuestionTemplate } from './components/QuizComponents/QuestionTemplate';
 import { Provider } from 'react-redux';
-// import store from './store/configureStore'; 
-// import store from './Store/fileConfigureStore';
 import UploadBulkQuiz from './components/QuizComponents/UploadBulkQuiz';
 import CoursePage from "./components/QuizComponents/CoursePage";
 import ReviewQuestions from './components/QuizComponents/ReviewQuestions';
-import QuizFeedback from './components/QuizComponents/QuizFeedback';
 import './App.css'
 import './Styles/CoursePage.css'
 import './Styles/CreateQuiz.css'
 import  GetAllFeedbacks  from './components/QuizComponents/GetAllFeedbacks';
 import QuestionTemplateView from './View/QuestionTemplateView';
-import TopicFeedback from './components/QuizComponents/TopicFeedback';
-import store from './Store/configureStore';
+import store from './Store/Store';
 import GetTopicFeedback from './components/QuizComponents/GetTopicFeedback';
-
-
-
+import CoursePageView from './View/CoursePageView';
 
 function App() {
   return (
       <Routes>
         <Route path="/quiz" element={<QuizEditor />} />
 
-        <Route path="/" element={
+        <Route path="/" element={<Provider store={store}><CoursePageView/></Provider>}/>
+
+        <Route path="/createquiz" element={
           <Provider store={store}>
-          <div>
-          <CoursePage/>
-          </div>
-        </Provider>
-        }/>
-        <Route path="/createquiz" element={<CreateQuizView/>}/>  
+            <div>
+            <CreateQuizView/>
+            </div>
+          </Provider>
+        }/>  
+
         <Route path='/questiontemplate' element={<QuestionTemplateView/>}/>
+
         <Route path='/getallfeedback' element={<GetAllFeedbacks/>}/>
-        {/* <Route path='/reviewquestions' element={<ReviewQuestions/>}/> */}
+
         <Route path='/reviewquestions' element={
           <Provider store={store}>
             <div>
@@ -61,7 +56,6 @@ function App() {
           <Provider store={store}>
             <div>
             <GetAllFeedbacks/>
-            {/* <GetTopicFeedback/> */}
             </div>
           </Provider>
         } />
@@ -70,7 +64,6 @@ function App() {
           <Provider store={store}>
             <div>
               <UploadBulkQuiz />
-      
             </div>
           </Provider>
         } />

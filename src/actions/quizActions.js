@@ -1,15 +1,12 @@
 export const addQuestion = (question) => ({
-    type: 'ADD_QUESTION',
-    payload: question
-  });
-  
-  export const editQuestion = (questionId, newText) => ({
-    type: 'EDIT_QUESTION',
-    payload: { questionId, newText }
-  });
-  
-  
-  
+  type: 'ADD_QUESTION',
+  payload: question
+});
+
+export const editQuestion = (questionId, newText) => ({
+  type: 'EDIT_QUESTION',
+  payload: { questionId, newText }
+});
 
 
 
@@ -31,7 +28,10 @@ export const addQuestion = (question) => ({
 
 
 
-  
+
+
+
+
 
 
 //   import React, { useState, useEffect } from 'react';
@@ -127,13 +127,13 @@ export const addQuestion = (question) => ({
 //             <Card.Body>
 //               <Form.Group controlId={`question-${question.id}`}>
 //                 <Form.Label>Question {index + 1}</Form.Label>
-//                 <Form.Control 
-//                   as="textarea" 
-//                   rows={2} 
-//                   value={question.text} 
+//                 <Form.Control
+//                   as="textarea"
+//                   rows={2}
+//                   value={question.text}
 //                   style={{ width: '90%', marginBottom: '10px' }}
-//                   onChange={(e) => handleEditQuestion(question.id, e.target.value)} 
-//                   readOnly={!question.isEditing} 
+//                   onChange={(e) => handleEditQuestion(question.id, e.target.value)}
+//                   readOnly={!question.isEditing}
 //                   isInvalid={!!errors[`question-${question.id}`]}
 //                 />
 //                 <Form.Control.Feedback type="invalid">
@@ -147,13 +147,13 @@ export const addQuestion = (question) => ({
 //                     <Row>
 //                       {question.options.map((option, idx) => (
 //                         <Col xs={6} key={option.id}>
-//                           <Form.Control 
-//                             type="text" 
-//                             value={option.text} 
-//                             onChange={(e) => handleEditOption(question.id, option.id, e.target.value)} 
-//                             readOnly={!question.isEditing} 
+//                           <Form.Control
+//                             type="text"
+//                             value={option.text}
+//                             onChange={(e) => handleEditOption(question.id, option.id, e.target.value)}
+//                             readOnly={!question.isEditing}
 //                             placeholder={`Option ${String.fromCharCode(65 + idx)}`}
-//                             style={{ width: '80%', marginBottom: '10px' }} 
+//                             style={{ width: '80%', marginBottom: '10px' }}
 //                             isInvalid={!!errors[`options-${question.id}`]}
 //                           />
 //                         </Col>
@@ -164,12 +164,12 @@ export const addQuestion = (question) => ({
 //                     </Form.Control.Feedback>
 //                     <Form.Group controlId={`correctAnswer-${question.id}`}>
 //                       <Form.Label>Correct Answer</Form.Label>
-//                       <Form.Control 
-//                         type="text" 
-//                         value={question.correctAnswer} 
+//                       <Form.Control
+//                         type="text"
+//                         value={question.correctAnswer}
 //                         style={{ width: '39%', marginBottom: '10px' }}
-//                         onChange={(e) => handleEditCorrectAnswer(question.id, e.target.value)} 
-//                         readOnly={!question.isEditing} 
+//                         onChange={(e) => handleEditCorrectAnswer(question.id, e.target.value)}
+//                         readOnly={!question.isEditing}
 //                         isInvalid={!!errors[`correctAnswer-${question.id}`]}
 //                       />
 //                       <Form.Control.Feedback type="invalid">

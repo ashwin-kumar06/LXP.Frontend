@@ -9,9 +9,10 @@ import { createquizfeedbackRequest, createquizfeedbackSuccess } from '../../acti
 import { connect, useDispatch } from 'react-redux';
 import AdminNavbar from './AdminNavbar';
 import { useLocation } from 'react-router-dom';
-import { GetAllQuestion } from '../../middleware/QuestionApi';
+import { fetchAllQuizQuestionRequest } from '../../actions/FetchQuizQuestionsAction';
+import { useSelector } from 'react-redux';
 
-export const ReviewQuestions = ({questions, loading, GetAllQuestion, editQuiz }) => {
+export const ReviewQuestions = () => {
     
     const [selectedQuestion, setSelectedQuestion] = useState(null);
     const location = useLocation();
@@ -22,8 +23,8 @@ export const ReviewQuestions = ({questions, loading, GetAllQuestion, editQuiz })
     const [showAddModal, setShowAddModal] = useState(false);
     // const [handleTypeChange, setHandleTypeChange] = useState(false);
     const searchParams = new URLSearchParams(location.search);
-    const quizId = searchParams.get('quizId');
-    const topicId = searchParams.get('topicId');
+    const quizId = sessionStorage.getItem('quizId');
+    const topicId = sessionStorage.getItem('topicId');
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -55,12 +56,16 @@ export const ReviewQuestions = ({questions, loading, GetAllQuestion, editQuiz })
     const fetchQuestions = async (quizId) => {
         
         try {
-            await GetAllQuestion(quizId);
+            dispatch(fetchAllQuizQuestionRequest(quizId));
             
         } catch (error) {
             console.error('Error fetching data:', error)
         }
     }
+
+    const questions = useSelector((state)=> state.quizQuestions.quizQuestions[0]);
+    const loading = useSelector((state)=>state.quizQuestions.loading) ;
+    const selector = useSelector((state)=> state.quizQuestions);
 
     const handleFeedback = () => {
         try {
@@ -164,7 +169,6 @@ export const ReviewQuestions = ({questions, loading, GetAllQuestion, editQuiz })
                     )}
                 </div>
                 <div className="question-details-container">
-                    {loading && <p>Loading...</p>}
                     {error && <p>Error: {error}</p>}
                     {questions && questions.length > 0 && (
                         <div>
@@ -283,18 +287,6 @@ export const ReviewQuestions = ({questions, loading, GetAllQuestion, editQuiz })
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        questions: state.questions.questions,
-        loading: state.questions.loading,
-      
 
-    };
-};
 
-const mapDispatchToProps = {
-    GetAllQuestion
-    // getQuizById
-};
-
-export default connect(mapStateToProps, mapDispatchToProps) (ReviewQuestions)
+export default ReviewQuestions

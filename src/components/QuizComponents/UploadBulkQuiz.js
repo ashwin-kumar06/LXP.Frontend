@@ -6,9 +6,8 @@ import AdminNavbar from '../AdminNavbar';
 import { BulkUploadQuestion } from '../../middleware/QuestionApi';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { fetchQuizById } from '../../middleware/api';
 import { useDispatch } from 'react-redux';
-
+import { fetchQuizIdRequest } from '../../actions/FetchQuizIdAction';
 const UploadBulkQuiz = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -27,7 +26,7 @@ const dispatch = useDispatch();
   })
 
   const fetchQuizId = async (topicId) => {
-    dispatch(fetchQuizById(topicId));
+    dispatch(fetchQuizIdRequest(topicId));
     // setQuizId(response);
   }
 

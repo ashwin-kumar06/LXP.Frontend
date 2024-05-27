@@ -7,7 +7,6 @@ import {
   } from '../../src/actions/QuizFeedbackAction';
   
   const initialState = {
-    
     quizfeedback: [],
     loading: false,
     error: null,
@@ -17,14 +16,11 @@ import {
   const QuizFeedbackReducer = (state = initialState, action) => {
     switch (action.type) {
        case CREATE_QUIZFEEDBACK_REQUEST:
-        
         return {
           ...state,
           loading: true,
         };
       case CREATE_QUIZFEEDBACK_SUCCESS:
-        console.log('quiz reducer', action.payload);
-        // Add the new course to the existing courses array
         return {
           ...state,
           loading: false,

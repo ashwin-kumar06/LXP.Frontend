@@ -1,31 +1,31 @@
 // reducers/CreateQuizReducer.js
-import { SET_QUIZ_DETAILS_FAILURE, SET_QUIZ_DETAILS_REQUEST, SET_QUIZ_DETAILS_SUCCESS } from "../actions/CreateQuizAction";
+import { EDIT_QUIZ_DETAILS_FAILURE, EDIT_QUIZ_DETAILS_REQUEST, EDIT_QUIZ_DETAILS_SUCCESS } from "../actions/EditQuizAction";
 
 const initialState = {
-    quizDetails:[],
+    editQuizDetails:[],
     error: null,
     loading: false,
     isSubmitted:false
 };
 
 
-const createQuizReducer = (state = initialState, action) => {
+const editQuizReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_QUIZ_DETAILS_REQUEST:
+        case EDIT_QUIZ_DETAILS_REQUEST:
             return {
                 ...state,
                 loading: true,
             };
-        case SET_QUIZ_DETAILS_SUCCESS:
+        case EDIT_QUIZ_DETAILS_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                quizDetails: action.payload,
-                isSubmitted:true,
+                editQuizDetails: action.payload,
+                isSubmitted:true, // Use the payload from the action
                 error: null,
             };
 
-        case SET_QUIZ_DETAILS_FAILURE:
+        case EDIT_QUIZ_DETAILS_FAILURE:
             return {
                 ...state,
                 loading: false,
@@ -36,4 +36,4 @@ const createQuizReducer = (state = initialState, action) => {
     }
 };
 
-export default createQuizReducer
+export default editQuizReducer

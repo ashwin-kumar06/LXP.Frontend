@@ -7,34 +7,31 @@ import { PiFileCssFill } from "react-icons/pi";
 import { useNavigate } from 'react-router-dom';
 import { fetchQuizById } from '../../middleware/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { fetchQuizIdRequest } from '../../actions/CreateQuizAction';
+import { fetchQuizIdRequest } from '../../actions/FetchQuizIdAction';
 
 function CoursePage() {
-
   const [noQuizTopicId, setNoQuizTopicId] = useState('98f8f96d-844e-4da1-8464-204984cdd8f1');
   const [yesQuizTopicId, setYesQuizTopicId] = useState('e3a895e4-1b3f-45b8-9c0a-98f9c0fa4996')
   const quizId = useSelector((state) => state.quizId.quizId);
   const isSuccess = useSelector((state) => state.quizId.isSubmitted);
-  const noQuizId = useSelector((state) => state.quizId.noQuiz);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [topicId, setTopicId] = useState('');
 
+  console.log("course page quizId",quizId, isSuccess);
 
-  // useEffect(() => {
-  //   if(isSuccess){
-  //     navigate(`/createquiz?quizId=${quizId}&topicId=${topicId}`);
-  //   }
-  // });
+
 
   const handleAddQuiz = async (topicId) => {
+    console.log("handleAddQuiz called with topicId:", topicId);
     setTopicId(topicId);
     dispatch(fetchQuizIdRequest(topicId));
-    // const result = await fetchQuizById(topicId);
-    if (isSuccess) {
-      navigate(`/createquiz?quizId=${quizId}&topicId=${topicId}`);
+    sessionStorage.setItem('topicId', topicId);
+    sessionStorage.setItem('quizId', quizId);
+    if(quizId){
+      navigate(`/createquiz`);
     }
+    // navigate("/createquiz");
   };
 
   const handleFeedback = (topicId) => {
@@ -47,7 +44,7 @@ function CoursePage() {
 
   const handleQuizFeedback = async (topicId) => {
     try {
-      dispatch(fetchQuizById(topicId));
+      // dispatch(fetchQuizById(topicId));
       // setQuizId(id);
       // navigate(`/quizfeedback?quizId=${id}&topicId=${topicId}`);
     } catch (error) {
@@ -70,7 +67,6 @@ function CoursePage() {
                     <Button variant="primary" size="sm" onClick={() => { handleAddQuiz(yesQuizTopicId) }}>Add Quiz</Button>
                     <Button variant="secondary" size="sm" onClick={() => { handleFeedback(yesQuizTopicId) }} style={{ marginLeft: "5px" }}>Add Feedback</Button>
                     <Button variant="secondary" size="sm" onClick={() => { handleQuizFeedback(yesQuizTopicId) }} style={{ marginLeft: "5px" }}>Add Quiz Feedback</Button>
-
                   </div>
                 </li>
               ))}

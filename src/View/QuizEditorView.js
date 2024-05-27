@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import store from '../Store/configureStore';
+import store from '../Store/Store';
 import QuizEditor from '../components/QuizEditor';
 
 
