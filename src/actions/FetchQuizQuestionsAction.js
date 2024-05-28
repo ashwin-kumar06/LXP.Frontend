@@ -9,9 +9,8 @@ export const fetchAllQuizQuestionRequest=(formData)=>({
  
 export const fetchAllQuizQuestionSuccess=(quizQuestions)=>({
     type:FETCH_ALL_QUIZ_QUESTION_SUCCESS,
-    payload:quizQuestions
+    payload:quizQuestions,
 });
- 
 export const fetchAllQuizQuestionFailure=(error)=>({
     type:FETCH_ALL_QUIZ_QUESTION_FAILURE,
     payload:error

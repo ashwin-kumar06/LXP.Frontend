@@ -18,7 +18,7 @@ const initialState = {
         return {
           ...state,
           loading: false,
-          quizQuestions: [...state.quizQuestions, action.payload],
+          quizQuestions: action.payload,
           isSubmitted:true,
           error: null,
         };

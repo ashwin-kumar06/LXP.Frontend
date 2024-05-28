@@ -4,13 +4,11 @@ import store from "../Store/Store";
 import '../Styles/CreateQuiz.css'
 import { QuestionTemplate } from "../components/QuizComponents/QuestionTemplate";
 function QuestionTemplateView() {
-  return (
-    <>
-      <Provider store={store}>
-        <QuestionTemplate/>
-      </Provider>
-    </>
-  );
+    return (
+        <>
+            <QuestionTemplate />
+        </>
+    );
 }
 
 export default QuestionTemplateView;

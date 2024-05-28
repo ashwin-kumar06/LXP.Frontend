@@ -6,9 +6,7 @@ import '../Styles/CreateQuiz.css'
 function CoursePageView() {
   return (
     <>
-      <Provider store={store}>
         <CoursePage />
-      </Provider>
     </>
   );
 }

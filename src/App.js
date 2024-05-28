@@ -14,61 +14,15 @@ import QuestionTemplateView from './View/QuestionTemplateView';
 import store from './Store/Store';
 import GetTopicFeedback from './components/QuizComponents/GetTopicFeedback';
 import CoursePageView from './View/CoursePageView';
+import Routing from './routers/Routing';
 
 function App() {
   return (
-      <Routes>
-        <Route path="/quiz" element={<QuizEditor />} />
-
-        <Route path="/" element={<Provider store={store}><CoursePageView/></Provider>}/>
-
-        <Route path="/createquiz" element={
-          <Provider store={store}>
-            <div>
-            <CreateQuizView/>
-            </div>
-          </Provider>
-        }/>  
-
-        <Route path='/questiontemplate' element={<QuestionTemplateView/>}/>
-
-        <Route path='/getallfeedback' element={<GetAllFeedbacks/>}/>
-
-        <Route path='/reviewquestions' element={
-          <Provider store={store}>
-            <div>
-            <ReviewQuestions/>
-      
-            </div>
-          </Provider>
-        } />
-
-      <Route path='/topicfeedback' element={
-          <Provider store={store}>
-            <div>
-            <GetTopicFeedback/>
-      
-            </div>
-          </Provider>
-        } />
-
-         <Route path='/quizfeedback' element={
-          <Provider store={store}>
-            <div>
-            <GetAllFeedbacks/>
-            </div>
-          </Provider>
-        } />
-        
-        <Route path='/upload' element={
-          <Provider store={store}>
-            <div>
-              <UploadBulkQuiz />
-            </div>
-          </Provider>
-        } />
-      </Routes>
-
+    <div>
+      <Provider store={store}>
+        <Routing/>
+      </Provider>
+    </div>
   )};
 export default App;
 

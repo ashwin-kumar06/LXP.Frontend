@@ -30,6 +30,8 @@ import { editQuizDetailsRequest } from '../../actions/EditQuizAction';
 import { fetchAllQuizQuestionRequest } from '../../actions/FetchQuizQuestionsAction';
 import { deleteQuizQuestionRequest } from '../../actions/DeleteQuizQuestionAction';
 import { updateQuizQuestionRequest } from '../../actions/UpdateQuizQuestionAction';
+import { QuestionTemplate } from './QuestionTemplate';
+import QuestionTemplateView from '../../View/QuestionTemplateView';
 
 
 export const Home = () => {
@@ -89,21 +91,19 @@ export const Home = () => {
         options: ['', '', '', '', '', '', '', ''],
         correctOptions: ['', '', '']
     });
+    
     const [isQuizEditable, setIsQuizEditable] = useState(!quizId);
 
     console.log("create quiz Id: ", quizId);
 
     useEffect(() => {
-        console.log("effect");
-        fetchQuestions(quizId);
         fetchQuizData(quizId);
     }, []);
 
-    const questions = useSelector((state) => state.quizQuestions.quizQuestions[0]);
-    const loading = useSelector((state) => state.quizQuestions.loading);
-    const selector = useSelector((state) => state.quizQuestions);
-    console.log("selector", selector);
-    console.log("questions", questions);
+    // const questions = useSelector((state) => state.quizQuestions.quizQuestions);
+    // const loading = useSelector((state) => state.quizQuestions.loading);
+    // const selector = useSelector((state) => state.quizQuestions);
+    // console.log("selector", selector);
 
     const toggleOptions = (event) => {
         event.preventDefault();
@@ -273,14 +273,13 @@ export const Home = () => {
         }
     }
 
-    const fetchQuestions = async (quizId) => {
-        console.log("quiz id varudha");
-        try {
-            dispatch(fetchAllQuizQuestionRequest(quizId))
-        } catch (error) {
-            console.error('Error fetching data:', error)
-        }
-    }
+    // const fetchQuestions = async (quizId) => {
+    //     try {
+    //         dispatch(fetchAllQuizQuestionRequest(quizId))
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error)
+    //     }
+    // }
 
     const handleUpdateQuiz = () => {
         const updatedQuizData = {
@@ -320,29 +319,28 @@ export const Home = () => {
 
 
 
-    const handleOpenEditQuestionModal = async (quizQuestionId) => {
-        try {
-            const response = await GetOpenEditQuestionModal(quizQuestionId);
-            const questionData = response;
-            setEditedQuestion({
-                quizQuestionId: quizQuestionId,
-                question: questionData.question,
-                questionType: questionData.questionType,
-                options: questionData.options.map(option => option.option),
-                correctOptions: questionData.options.filter(option => option.isCorrect).map(option => option.option)
-            });
+    // const handleOpenEditQuestionModal = async (quizQuestionId) => {
+    //     try {
+    //         const response = await GetOpenEditQuestionModal(quizQuestionId);
+    //         const questionData = response;
+    //         setEditedQuestion({
+    //             quizQuestionId: quizQuestionId,
+    //             question: questionData.question,
+    //             questionType: questionData.questionType,
+    //             options: questionData.options.map(option => option.option),
+    //             correctOptions: questionData.options.filter(option => option.isCorrect).map(option => option.option)
+    //         });
+    //         setShowEditQuestionModal(true);
+    //     } catch (error) {
+    //         console.error('Error fetching question data:', error);
+    //     }
+    // };
 
-            setShowEditQuestionModal(true);
-        } catch (error) {
-            console.error('Error fetching question data:', error);
-        }
-    };
-
-    const handleDeleteQuestion = (quizQuestionId) => {
-        // DeleteQuestion(quizQuestionId);
-        dispatch(deleteQuizQuestionRequest(quizQuestionId))
-        // window.location.reload();
-    };
+    // const handleDeleteQuestion = (quizQuestionId) => {
+    //     // DeleteQuestion(quizQuestionId);
+    //     dispatch(deleteQuizQuestionRequest(quizQuestionId))
+    //     // window.location.reload();
+    // };
 
     const handleCloseEditQuestionModal = () => {
         setShowEditQuestionModal(false);
@@ -445,23 +443,23 @@ export const Home = () => {
         }
     };
 
-    useEffect(() => {
-        const newFilteredQuestions = questions.filter(question =>
-            !selectedQuestionType || question.questionType === selectedQuestionType
-        );
-        setFilteredQuestions(newFilteredQuestions);
-    }, [selectedQuestionType, questions]);
+    // useEffect(() => {
+    //     const newFilteredQuestions = questions.filter(question =>
+    //         !selectedQuestionType || question.questionType === selectedQuestionType
+    //     );
+    //     setFilteredQuestions(newFilteredQuestions);
+    // }, [selectedQuestionType, questions]);
 
     // Function to handle page change
-    const handlePageChange = (event, value) => {
-        setCurrentPage(value);
-    };
+    // const handlePageChange = (event, value) => {
+    //     setCurrentPage(value);
+    // };
 
-    const searchFilteredQuestions = questions.filter(question =>
-        question.question.toLowerCase().includes(searchTerm) &&
-        (!selectedQuestionType || question.questionType === selectedQuestionType)
+    // const searchFilteredQuestions = questions.filter(question =>
+    //     question.question.toLowerCase().includes(searchTerm) &&
+    //     (!selectedQuestionType || question.questionType === selectedQuestionType)
 
-    );
+    // );
 
 
 
@@ -469,7 +467,7 @@ export const Home = () => {
     const indexOfLastQuestion = currentPage * questionsPerPage;
     const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
     // const currentQuestions = filteredQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
-    const currentQuestions = searchFilteredQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
+    // const currentQuestions = searchFilteredQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value.toLowerCase());
@@ -601,86 +599,11 @@ export const Home = () => {
             </div>
 
             {/* --------------------------------------------------------------*/}
-            <div className='question template container'>
-                {error && <p>Error: {error}</p>}
-                {/* {questions && questions.length > 0 && ( */}
-                {currentQuestions.length > 0 ? (
-                    <div style={{ marginTop: "-20%", marginLeft: "15%" }}>
-                        <h5>Uploaded Questions</h5>
-                        <div style={{ marginTop: "-6px", marginLeft: "68.5%" }}>
-                            {/* <Pagination/> */}
-
-                            <div>
-                                <BasicPagination
-                                    totalQuestions={filteredQuestions.length}
-                                    questionsPerPage={questionsPerPage}
-                                    page={currentPage}
-                                    onPageChange={handlePageChange}
-                                />
-                            </div>
-
-
-                        </div>
-                        {/* {questions.filter(question => !selectedQuestionType || question.questionType === selectedQuestionType).map((question, index) => ( */}
-
-                        {currentQuestions.map((question, index) => (
-
-                            <div key={index} className='card mt-4' style={{ backgroundColor: "rgb(237, 231, 231)" }}>
-                                <div className='d-flex justify-content-end'>
-                                    <a onClick={() => { handleOpenEditQuestionModal(question.quizQuestionId) }} className='m-2 me-2'><AiFillEdit style={{ fontSize: "30", color: "#365486" }} /></a>
-                                    <a onClick={() => { handleDeleteQuestion(question.quizQuestionId) }} className='m-2 ms-3'><FaTrashCan style={{ fontSize: "23", color: "#365486" }} /></a>
-                                    {/* <Button class="btn btn-light" style={{marginLeft:"80%" , marginTop:"-3%" , backgroundColor:"#365486", color:"white"}} onClick={handleOpenQuizEditModal}><AiFillEdit/> Edit</Button>
-                                <Button class="btn btn-light" style={{marginLeft:"89%" , marginTop:"-8.5%", backgroundColor:"#365486", color:"white"}} onClick={handleDeleteQuiz}><FaTrashCan/> Delete</Button> */}
-                                </div>
-                                <div className="card-body">
-                                    <h5 className='card-title'>Question Type : {question.questionType}</h5>
-                                    <h5 className="card-title">Question {question.questionNo}:</h5>
-
-                                    <input value={question.question} className='form-control' readOnly />
-                                    <div className="form-group">
-                                        <label>Options:</label>
-                                        {question.options.map((option, index) => (
-                                            <input
-                                                key={index}
-                                                type="text"
-                                                className="form-control mt-2"
-                                                value={option.option}
-                                                readOnly
-                                            />
-                                        ))}
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Correct Answers:</label>
-                                        {question.options.filter(option => option.isCorrect).map((correctOption, index) => (
-                                            <input
-                                                key={index}
-                                                type="text"
-                                                className="form-control mt-2"
-                                                value={correctOption.option}
-                                                readOnly
-                                            />
-
-                                        ))}
-
-                                    </div>
-
-                                    <button onClick={handleOpenAddQuestionModal} className="btn btn-light mt-3 mb-5 float-right" style={{ backgroundColor: "#365486", color: "white" }}>Add More Question</button>
-                                </div>
-                            </div>
-
-
-
-                        ))}
-
-                    </div>
-                ) : (
-                    <p>No questions match your search.</p>
-                )}
-
+            <div className='question-template-container'>
+                {/* <QuestionTemplateView/> */}
             </div>
             <div>
                 <button onClick={handleSubmit} className="btn btn-light mt-3 mb-5 float-left" style={{ backgroundColor: "#365486", color: "white", marginLeft: "92%" }}>Proceed</button>
-
             </div>
             {/* DeleteQuiz */}
             <Modal show={showQuizDeleteModal} onHide={handleCloseQuizDeleteModal}>

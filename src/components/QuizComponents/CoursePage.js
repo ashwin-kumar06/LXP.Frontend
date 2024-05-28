@@ -29,9 +29,8 @@ function CoursePage() {
     sessionStorage.setItem('topicId', topicId);
     sessionStorage.setItem('quizId', quizId);
     if(quizId){
-      navigate(`/createquiz`);
+      navigate(`/questiontemplate`);
     }
-    // navigate("/createquiz");
   };
 
   const handleFeedback = (topicId) => {
