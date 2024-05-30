@@ -40,8 +40,6 @@ export const GetAllFeedbacks = () => {
     options: [],
   }); /// going to store the value of edit
 
-  
-
   const getfeedback = useSelector(
     (state) => state.fetchquizfeedbackid.quizfeedback
   );
@@ -134,9 +132,8 @@ export const GetAllFeedbacks = () => {
   };
 
   const handleUpdateQuestion = () => {
-    const { quizFeedbackQuestionId, questionType, ...updatedQuestion } =
+    const { quizFeedbackQuestionId, questionType, quizId, ...updatedQuestion } =
       editedQuestion;
-    debugger;
     const updatedOptions = updatedQuestion.options.map((optionText, index) => ({
       optionText,
     }));
@@ -148,7 +145,7 @@ export const GetAllFeedbacks = () => {
       options: updatedOptions,
     };
     console.log("requestBody", requestBody);
-    console.log("quizre",quizFeedbackQuestionId);
+    console.log("quizre", quizFeedbackQuestionId);
     //   if (validateUpdateQuestion()) {
     dispatch(updatequizfeedbackRequest(quizFeedbackQuestionId, requestBody));
     //       handleCloseEditQuestionModal();
@@ -166,10 +163,6 @@ export const GetAllFeedbacks = () => {
     //   }
   };
 
-
-
-
-
   // const handleOpenEditQuestionModal = async (quizfeedbackId) => {
   //   console.log("handleopen",quizfeedbackId)
   //   if(getfeedback){
@@ -177,7 +170,7 @@ export const GetAllFeedbacks = () => {
   //   }
   //   dispatch(fetchquizfeedbackRequest(quizfeedbackId));
   //   // const individualfeedback = fetchquizfeedbackRequest(quizfeedbackId);
-    
+
   //   //updatequizfeedbackRequest(quizfeedbackId);
   //   // const getfeedback = response;
   //   console.log("ki", getfeedback.options);
@@ -189,17 +182,14 @@ export const GetAllFeedbacks = () => {
   //     options: getfeedback.options.map((option) => option.optionText),
   //   });
   //   console.log(editedQuestion)
-    
+
   //   // setShowEditQuestionModal(true);
   // };
 
-
-
-
   const handleOpenEditQuestionModal = async (quizfeedbackId) => {
-    console.log("handleopen", quizfeedbackId)
+    console.log("handleopen", quizfeedbackId);
     dispatch(fetchquizfeedbackRequest(quizfeedbackId));
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
     if (getfeedback && getfeedback.options) {
       setShowEditfbQuestionModal(true);
       setEditedQuestion({
@@ -208,21 +198,19 @@ export const GetAllFeedbacks = () => {
         questionType: getfeedback.questionType,
         options: getfeedback.options.map((option) => option.optionText),
       });
-      console.log(editedQuestion)
+      console.log(editedQuestion);
     }
   };
-  
-  const handleDeletefbQuestion = (quizFeedbackQuestionId) => {
 
+  const handleDeletefbQuestion = (quizFeedbackQuestionId) => {
     dispatch(deletequizfeedbackRequest(quizFeedbackQuestionId));
     // <Alert severity="success">Deleted quiz feedback question</Alert>;
     // setTimeout(window.location.reload(),1500);
     // debugger;
   };
   const handleNavigate = () => {
-    navigate('/');
-  }
-
+    navigate("/");
+  };
 
   const handleCloseModal = () => {
     setShowAddModal(false);
@@ -257,7 +245,10 @@ export const GetAllFeedbacks = () => {
                     }}
                     className="m-2 me-2"
                   >
-                    <AiFillEdit id="edit" style={{ fontSize: "30", color: "#365486"}} />
+                    <AiFillEdit
+                      id="edit"
+                      style={{ fontSize: "30", color: "#365486" }}
+                    />
                   </a>
                   <a
                     onClick={() => {
@@ -265,7 +256,10 @@ export const GetAllFeedbacks = () => {
                     }}
                     className="m-2 ms-3"
                   >
-                    <FaTrashCan id="delete" style={{ fontSize: "25", color: "#365486" }} />
+                    <FaTrashCan
+                      id="delete"
+                      style={{ fontSize: "25", color: "#365486" }}
+                    />
                   </a>
                 </div>
                 <div className="card-body">
@@ -290,18 +284,47 @@ export const GetAllFeedbacks = () => {
         </div>
       </div>
       <div>
-      <button onClick={handleTypeChange} className="btn btn-light mt-3 mb-5 float-right" style={{ backgroundColor: "#365486", color: "white", marginLeft: "85%" }}>Submit</button>
-      <Modal show={showAddModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton style={{ backgroundColor: "#23275c" }}>
-        </Modal.Header>
-        <Modal.Body style={{ backgroundColor: "rgb(237, 231, 231)" }}>
-          <div onClick={handleTypeChange}><Alert severity="success" color='info'>QuizFeedback Published successfully !</Alert></div>
-        </Modal.Body>
-        <Modal.Footer style={{ backgroundColor: "rgb(237, 231, 231)" }}>
-          <Button className="btn btn-light mt-1 mb-5" style={{ backgroundColor: "#365486", color: "white", marginLeft: "55%" }} onClick={() => { handleCloseModal(); handleNavigate(); }}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    </div>
+        <button
+          onClick={handleTypeChange}
+          className="btn btn-light mt-3 mb-5 float-right"
+          style={{
+            backgroundColor: "#365486",
+            color: "white",
+            marginLeft: "85%",
+          }}
+        >
+          Submit
+        </button>
+        <Modal show={showAddModal} onHide={handleCloseModal}>
+          <Modal.Header
+            closeButton
+            style={{ backgroundColor: "#23275c" }}
+          ></Modal.Header>
+          <Modal.Body style={{ backgroundColor: "rgb(237, 231, 231)" }}>
+            <div onClick={handleTypeChange}>
+              <Alert severity="success" color="info">
+                QuizFeedback Published successfully !
+              </Alert>
+            </div>
+          </Modal.Body>
+          <Modal.Footer style={{ backgroundColor: "rgb(237, 231, 231)" }}>
+            <Button
+              className="btn btn-light mt-1 mb-5"
+              style={{
+                backgroundColor: "#365486",
+                color: "white",
+                marginLeft: "55%",
+              }}
+              onClick={() => {
+                handleCloseModal();
+                handleNavigate();
+              }}
+            >
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
       <Modal
         show={showEditfbQuestionModal}
         onHide={handleCloseEditQuestionModal}
@@ -313,7 +336,7 @@ export const GetAllFeedbacks = () => {
           <Modal.Title>
             <h5>Edit Question</h5>
           </Modal.Title>
-       </Modal.Header>
+        </Modal.Header>
         <Modal.Body style={{ backgroundColor: "rgb(237, 231, 231)" }}>
           <div className="form-group">
             <label>Question:</label>
