@@ -17,16 +17,18 @@ import fetchQuizQuestionsReducer from '../reducers/FetchQuizQuestionsReducer.js'
 import { FetchQuizQuestionsApi } from '../middleware/FetchQuizQuestionsApi';
 import deleteQuizQuestionsReducer from '../reducers/DeleteQuizQuestionReducer';
 import updateQuizQuestionReducer from '../reducers/UpdateQuizQuestionReducer';
+import createQuizReducer from '../reducers/CreateQuizReducer';
 
 
 export const rootReducer = combineReducers({
   quizId: quizIdReducer,
   quizQuestions: fetchQuizQuestionsReducer,
   deleteQuestion: deleteQuizQuestionsReducer,
-  editQuizQuestion: updateQuizQuestionReducer
+  editQuizQuestion: updateQuizQuestionReducer,
+  quiz: createQuizReducer,
 
 });
 
-const store = createStore(rootReducer, applyMiddleware(thunk,FetchQuizById,FetchQuizQuestionsApi, DeleteQuizQuestionsApi, UpdateQuizQuestionsApi));
+const store = createStore(rootReducer, applyMiddleware(thunk,FetchQuizById,FetchQuizQuestionsApi, DeleteQuizQuestionsApi, UpdateQuizQuestionsApi, CreateQuizApi));
  
 export default store;

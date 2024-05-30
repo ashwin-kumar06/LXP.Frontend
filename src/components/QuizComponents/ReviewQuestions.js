@@ -11,9 +11,11 @@ import AdminNavbar from './AdminNavbar';
 import { useLocation } from 'react-router-dom';
 import { fetchAllQuizQuestionRequest } from '../../actions/FetchQuizQuestionsAction';
 import { useSelector } from 'react-redux';
+import { Row, Container } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 
 export const ReviewQuestions = () => {
-    
+
     const [selectedQuestion, setSelectedQuestion] = useState(null);
     const location = useLocation();
     const [error, setError] = useState('');
@@ -54,22 +56,22 @@ export const ReviewQuestions = () => {
     }, []);
 
     const fetchQuestions = async (quizId) => {
-        
+
         try {
             dispatch(fetchAllQuizQuestionRequest(quizId));
-            
+
         } catch (error) {
             console.error('Error fetching data:', error)
         }
     }
 
-    const questions = useSelector((state)=> state.quizQuestions.quizQuestions[0]);
-    const loading = useSelector((state)=>state.quizQuestions.loading) ;
-    const selector = useSelector((state)=> state.quizQuestions);
+    const questions = useSelector((state) => state.quizQuestions.quizQuestions);
+    const loading = useSelector((state) => state.quizQuestions.loading);
+    const selector = useSelector((state) => state.quizQuestions);
 
     const handleFeedback = () => {
         try {
-            navigate(`/quizfeedback?quizId=${quizId}&topicId=${topicId}`);
+            navigate(`/quizfeedback`);
         } catch (error) {
             console.error('Error navigating:', error);
         }
@@ -148,138 +150,143 @@ export const ReviewQuestions = () => {
         }));
     };
 
+    const handleSelectQuestion = (index) => {
+        setSelectedQuestion(index);
+        // Scroll to the question details
+        const questionElement = document.getElementById(`question-${index}`);
+        if (questionElement) {
+            questionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    };
+
+    const handleNavigate = () => {
+        navigate(`/createquiz`);
+    }
+
 
     return (
         <div>
-            <AdminNavbar />
-            <div className='question template container' style={{ display: 'flex', marginTop: "-37%" }}>
-                <div className="question-grid-container">
-                    {questions && questions.length > 0 && (
-                        <div className="question-grid">
-                            {questions.map((question, index) => (
-                                <div
-                                    key={index}
-                                    className={`question-number ${question === index ? 'active' : ''}`}
-                                    onClick={() => setSelectedQuestion(index)}
-                                >
-                                    {index + 1}
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-                <div className="question-details-container">
-                    {error && <p>Error: {error}</p>}
-                    {questions && questions.length > 0 && (
-                        <div>
-                            <h5 style={{ marginTop: "5%" }}>Review Questions</h5>
-                            {questions.map((question, index) => (
-                                <div key={index} className='card mt-3' style={{ backgroundColor: "rgb(237, 231, 231)" }}>
-                                    <div className='d-flex justify-content-end'>
+            <button class="btn btn-light" style={{ marginLeft: "95%", marginTop: "5%", backgroundColor: "#365486", color: "white", width: '50' }} onClick={() => { handleNavigate() }} >Back</button>
+            <div>
+                <Row>
+                    <AdminNavbar />
+                </Row>
+                <div className='question-template-container' style={{ display: 'flex', marginTop: "-37%" }}>
+                    <div className="question-grid-container ">
+                        {questions && questions.length > 0 && (
+                            <div className="question-grid">
+                                {questions.map((question, index) => (
+                                    <div
+                                        key={index}
+                                        className={`question-number ${selectedQuestion === index ? 'active' : ''}`}
+                                        onClick={() => handleSelectQuestion(index)}
+                                    >
+                                        {index + 1}
                                     </div>
-                                    <div className="card-body">
-                                        <h5 className="card-title">Question {question.questionNo}:</h5>
-
-                                        <input value={question.question} className='form-control' readOnly />
-                                        <div className="form-group">
-                                            <label>Options:</label>
-                                            {question.options.map((option, index) => (
-                                                <input
-                                                    key={index}
-                                                    type="text"
-                                                    className="form-control mt-2"
-                                                    value={option.option}
-                                                    readOnly
-                                                />
-                                            ))}
-                                        </div>
-                                        <div className="form-group">
-                                            <label>Correct Answers:</label>
-                                            {question.options.filter(option => option.isCorrect).map((correctOption, index) => (
-                                                <input
-                                                    key={index}
-                                                    type="text"
-                                                    className="form-control mt-2"
-                                                    value={correctOption.option}
-                                                    readOnly
-                                                />
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            ))}
-                            <button onClick={handleSubmit} className="btn btn-light mt-3 mb-5 float-right" style={{ backgroundColor: "#365486", color: "white" }}>Go to Edit Page</button>
-
-                            <button onClick={handleTypeChange} className="btn btn-light mt-3 mb-5 float-right" style={{ backgroundColor: "#365486", color: "white", marginLeft: "74%" }}>Review & Publish</button>
-
-
-                        </div>
-                    )}
-                </div>
-
-                <div>
-                    <Modal show={showAddfbModal} onHide={handleCloseAddfbQuestionModal}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Add Feedback Questions</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body style={{ backgroundColor: "rgb(237, 231, 231)" }}>
-                            <div className="form-group">
-                                <label>Question Type:</label>
-                                <select className='form-control' value={selectedfbType} onChange={handlefbQuestionTypeChange}>
-                                    <option value="">Select Question Type</option>
-                                    <option value="MCQ">MCQ</option>
-                                    <option value="Descriptive">Descriptive</option>
-                                </select>
-                                {errorfb.questionType && <div style={{ color: "red" }}>{errorfb.questionType}</div>}
+                                ))}
                             </div>
-
-                            {selectedfbType === 'MCQ' && (
-                                <>
-                                    <div className="form-group">
-                                        <label>Question:</label>
-                                        <input className='form-control' type="text" value={fbQuestion.question} onChange={(e) => handleChange(-1, 'question', e.target.value)} />
-                                        {errorfb.question && <div style={{ color: "red" }}>{errorfb.question}</div>}
-                                    </div>
-                                    {[...Array(4)].map((_, index) => (
-                                        <div className="form-group" key={index}>
-                                            <label>Option {index + 1}:</label>
-                                            <input className='form-control' type="text" value={fbQuestion.options[index] || ''} onChange={(e) => handleChange(index, 'options', e.target.value)} />
-                                            {errorfb.options && <div style={{ color: "red" }}>{errorfb.options}</div>}
+                        )}
+                    </div>
+                    <Container style={{ width: 700 }}>
+                        <div className="question-details-container">
+                         
+                            {error && <p>Error: {error}</p>}
+                            {questions && questions.length > 0 && (
+                                <div>
+                                    <h5 className='text' style={{ marginTop: "-5%" }}>Review Questions</h5>
+                                    {questions.map((question, index) => (
+                                        <div
+                                            key={index}
+                                            id={`question-${index}`} // Add an ID to each question card
+                                            className='card mt-3'>
+                                            <div className='d-flex justify-content-end'></div>
+                                            <div className="card-body">
+                                                <h5 className="card-title">Question {question.questionNo}:</h5>
+                                                <input value={question.question} className='form-control' readOnly />
+                                                <div className="form-group">
+                                                    <label>Options:</label>
+                                                    {question.options.map((option, index) => (
+                                                        <input key={index} type="text" className="form-control mt-2" value={option.option} readOnly />
+                                                    ))}
+                                                </div>
+                                                <div className="form-group">
+                                                    <label>Correct Answers:</label>
+                                                    {question.options.filter(option => option.isCorrect).map((correctOption, index) => (
+                                                        <input key={index} type="text" className="form-control mt-2" value={correctOption.option} readOnly />
+                                                    ))}
+                                                </div>
+                                            </div>
                                         </div>
                                     ))}
-                                </>
+                                    <button onClick={handleSubmit} className="btn btn-light mt-3 mb-5 float-right" style={{ backgroundColor: "#365486", color: "white" }}>Go to Edit Page</button>
+                                    <button onClick={handleTypeChange} className="btn btn-light mt-1 mb-5 float-right" style={{ backgroundColor: "#365486", color: "white", marginLeft: "70%" }}>Review & Publish</button>
+                                </div>
                             )}
-                            {selectedfbType === 'Descriptive' && (
-                                <>
-                                    <div className="form-group">
-                                        <label>Question:</label>
-                                        <input className='form-control' type="text" value={fbQuestion.question} onChange={(e) => handleChange(-1, 'question', e.target.value)} />
-                                        {errorfb.question && <div style={{ color: "red" }}>{errorfb.question}</div>}
-                                    </div>
-                                </>
-                            )}
-                        </Modal.Body>
-                        <Modal.Footer style={{ backgroundColor: "rgb(237, 231, 231)" }}>
-                            <Button variant="secondary" onClick={handleCloseAddfbQuestionModal}>Close</Button>
-                            <Button variant="primary" onClick={() => { handleSaveQuestion() }}>Save</Button>
+                        </div>
+                    </Container>
 
-                        </Modal.Footer>
-                    </Modal>
+                    <div>
+                        <Modal show={showAddfbModal} onHide={handleCloseAddfbQuestionModal}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Add Feedback Questions</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body style={{ backgroundColor: "rgb(237, 231, 231)" }}>
+                                <div className="form-group">
+                                    <label>Question Type:</label>
+                                    <select className='form-control' value={selectedfbType} onChange={handlefbQuestionTypeChange}>
+                                        <option value="">Select Question Type</option>
+                                        <option value="MCQ">MCQ</option>
+                                        <option value="Descriptive">Descriptive</option>
+                                    </select>
+                                    {errorfb.questionType && <div style={{ color: "red" }}>{errorfb.questionType}</div>}
+                                </div>
 
-                    <Modal show={showAddModal} onHide={handleCloseModal}>
-                        <Modal.Header closeButton style={{ backgroundColor: "#23275c" }}>
-                        </Modal.Header>
-                        <Modal.Body style={{ backgroundColor: "rgb(237, 231, 231)" }}>
-                            <div onChange={handleTypeChange}><h6>Quiz Questions Published successfully</h6></div>
-                        </Modal.Body>
-                        <Modal.Footer style={{ backgroundColor: "rgb(237, 231, 231)" }}>
-                            <Button onClick={handleFeedback} className="btn btn-light mt-3 mb-5 " style={{ backgroundColor: "#365486", color: "white", marginLeft: "-1%" }}>Add Feedback</Button>
-                            <Button className="btn btn-light mt-3 mb-5" style={{ backgroundColor: "#365486", color: "white", marginLeft: "60%" }} onClick={handleCloseModal}>Ok</Button>
+                                {selectedfbType === 'MCQ' && (
+                                    <>
+                                        <div className="form-group">
+                                            <label>Question:</label>
+                                            <input className='form-control' type="text" value={fbQuestion.question} onChange={(e) => handleChange(-1, 'question', e.target.value)} />
+                                            {errorfb.question && <div style={{ color: "red" }}>{errorfb.question}</div>}
+                                        </div>
+                                        {[...Array(4)].map((_, index) => (
+                                            <div className="form-group" key={index}>
+                                                <label>Option {index + 1}:</label>
+                                                <input className='form-control' type="text" value={fbQuestion.options[index] || ''} onChange={(e) => handleChange(index, 'options', e.target.value)} />
+                                                {errorfb.options && <div style={{ color: "red" }}>{errorfb.options}</div>}
+                                            </div>
+                                        ))}
+                                    </>
+                                )}
+                                {selectedfbType === 'Descriptive' && (
+                                    <>
+                                        <div className="form-group">
+                                            <label>Question:</label>
+                                            <input className='form-control' type="text" value={fbQuestion.question} onChange={(e) => handleChange(-1, 'question', e.target.value)} />
+                                            {errorfb.question && <div style={{ color: "red" }}>{errorfb.question}</div>}
+                                        </div>
+                                    </>
+                                )}
+                            </Modal.Body>
+                            <Modal.Footer style={{ backgroundColor: "rgb(237, 231, 231)" }}>
+                                <Button variant="secondary" onClick={handleCloseAddfbQuestionModal}>Close</Button>
+                                <Button variant="primary" onClick={() => { handleSaveQuestion() }}>Save</Button>
 
-                        </Modal.Footer>
-                    </Modal>
+                            </Modal.Footer>
+                        </Modal>
+
+                        <Modal show={showAddModal} onHide={handleCloseModal}>
+                            <Modal.Header closeButton style={{ backgroundColor: "#23275c" }}>
+                            </Modal.Header>
+                            <Modal.Body style={{ backgroundColor: "rgb(237, 231, 231)" }}>
+                                <div onChange={handleTypeChange}><Alert severity="success" color='info'>Quiz Questions Published successfully</Alert></div>
+                            </Modal.Body>
+                            <Modal.Footer style={{ backgroundColor: "rgb(237, 231, 231)" }}>
+                                <Button onClick={handleFeedback} className="btn btn-light mt-3 mb-5 " style={{ backgroundColor: "#365486", color: "white", marginLeft: "-10%" }}>Add Feedback</Button>
+                                <Button className="btn btn-light mt-3 mb-5" style={{ backgroundColor: "#365486", color: "white", marginLeft: "55%" }} onClick={handleCloseModal}>Close</Button>
+
+                            </Modal.Footer>
+                        </Modal>
+                    </div>
                 </div>
             </div>
         </div>

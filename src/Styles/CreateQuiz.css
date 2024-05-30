@@ -1,84 +1,120 @@
 #QuizCard{
-    width:1100px;
-    /* height:430px; */
-    margin-left:18%;
-    margin-top:-50%;
-    background-color:rgb(237, 231, 231);
-  }
-  .col-sm-3{
-    font-weight: bold;
-  }
-  
-  #bulklink,#newquelink{
-    text-decoration: none;
-    color:rgba(128, 128, 128);
-  }
+  width:1100px;
+  /* height:430px; */
+  margin-left:18%;
+  margin-top:-50%;
+  background-color:rgb(237, 231, 231);
+}
+.col-sm-3{
+  font-weight: bold;
+}
 
-  #questitle{
-    color:grey;
-  }
-  .question-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    margin-top: 5%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 300px;
-  }
-  
-  .question-number {
-    margin: 10px;
-    width: 50px;
-    height: 50px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+#bulklink,#newquelink{
+  text-decoration: none;
+  color:rgba(128, 128, 128);
+}
 
-  }
-  .question-details-container{
-    
-    margin-left: 80px;
-    width: 700px;
-  }
-  #required{
-    color:Red;
-  }
+#questitle{
+  color:grey;
+}
+.question-grid {
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top:20%;
+  margin-left:35%;
+  border:2px solid #ccc;
+  background-color:aliceblue;
+  border-radius:5px;
+  width: 300px;
+ 
+}
+.card-body{
+background-color: rgb(237, 231, 231);
+}
 
-  #editicon{
-    font-size:30; 
-    margin-left:90%
-  }
+.question-number {
+  margin:10px;
+  width:50px;
+  height:55px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor:pointer;
+  background-color:rgb(237, 231, 231);
+  font-weight:500;
+ 
 
-  #delicon{
-    font-size:28;
-    margin-left:2%;
-  }
+}
 
-  #id{
-    font-weight:bold;
-  }
+.question-grid-container {
+  position:fixed; /* This will make it fixed on the page */
+  top:180px; /* Adjust this value to place it from the top */
+  left:20px; /* Adjust this value to place it from the left */
+  z-index:900; /* This ensures it stays above other content */
+}
 
-  #filter{
-    margin-top:-23%;
-    margin-left:75%;
-  }
 
-  
+.question-number:hover {
+  border: 2px solid rgb(96, 96, 188);
+}
+.question-number.active {
+background-color:#365486;
+border-color:#365486;
+color: white;
+}
 
-  /* .card-body question{
-    margin-top:-550px;
-    margin-left:90;
-  } */
+.containertitle{
+font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+
+}
+
+.text{
+font-style:unset;
+color: #365486;
+font-weight:500;
+/* color:slategrey; */
+}
+
+
+.question-details-container{
+  margin-top:-10%;
+  width:1000px;
+  position: inherit;
+}
+
+#required{
+  color:Red;
+}
+
+#editicon{
+  font-size:30;
+  margin-left:90%
+}
+
+#delicon{
+  font-size:28;
+  margin-left:2%;
+}
+
+#id{
+  font-weight:bold;
+}
+
+#filter{
+  margin-top:-23%;
+  margin-left:75%;
+}
+
 
 #search{
-  position: relative;
-  left:50%;
-  top:-130px !important;
-  padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    width:230px;
+position: relative;
+left:50%;
+top:-130px !important;
+padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  width:230px;
 }

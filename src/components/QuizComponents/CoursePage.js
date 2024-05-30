@@ -28,8 +28,8 @@ function CoursePage() {
     dispatch(fetchQuizIdRequest(topicId));
     sessionStorage.setItem('topicId', topicId);
     sessionStorage.setItem('quizId', quizId);
-    if(quizId){
-      navigate(`/questiontemplate`);
+    if(isSuccess){
+      navigate(`/createquiz`);
     }
   };
 

@@ -94,7 +94,7 @@ export const Home = () => {
     
     const [isQuizEditable, setIsQuizEditable] = useState(!quizId);
 
-    console.log("create quiz Id: ", quizId);
+    // console.log("create quiz Id: ", quizId);
 
     useEffect(() => {
         fetchQuizData(quizId);
@@ -115,6 +115,7 @@ export const Home = () => {
         e.preventDefault();
         console.log("quiz details:", quizDetails);
         dispatch(setQuizDetailsRequest(quizDetails));
+        navigate('/upload');
         // try {
         //   console.log("quiz det:", quizDetails);
         //   dispatch(setQuizDetailsRequest(quizDetails));
@@ -156,9 +157,14 @@ export const Home = () => {
         setShowAddQuestionModal(true);
     };
 
-    const handleCloseAddQuestionModal = () => {
-        setShowAddQuestionModal(false);
-    };
+    // const handleCloseAddQuestionModal = () => {
+    //     setShowAddQuestionModal(false);
+    // };
+
+    // const handleCloseEditQuestionModal = () => {
+    //     setShowEditQuestionModal(false);
+    //     window.location.reload();
+    // };
 
     const handleCloseQuizEditModal = () => {
         setShowQuizEditModal(false);
@@ -176,64 +182,64 @@ export const Home = () => {
         setShowQuizDeleteModal(true);
     }
 
-    const handleChanges = (index, value) => {
-        const updatedOptions = [...newQuestion.options];
-        updatedOptions[index] = value;
-        setNewQuestion({ ...newQuestion, options: updatedOptions });
-    };
+    // const handleChanges = (index, value) => {
+    //     const updatedOptions = [...newQuestion.options];
+    //     updatedOptions[index] = value;
+    //     setNewQuestion({ ...newQuestion, options: updatedOptions });
+    // };
 
 
-    const handleChange = (index, field, value) => {
-        if (field === 'correctOptions') {
-            setNewQuestion(prevState => ({
-                ...prevState,
-                correctOptions: [...prevState.correctOptions.slice(0, index), value, ...prevState.correctOptions.slice(index + 1)]
-            }));
-        } else {
-            setNewQuestion(prevState => ({
-                ...prevState,
-                [field]: index === -1 ? value : [...prevState[field].slice(0, index), value, ...prevState[field].slice(index + 1)]
-            }));
-        }
-    };
+    // const handleChange = (index, field, value) => {
+    //     if (field === 'correctOptions') {
+    //         setNewQuestion(prevState => ({
+    //             ...prevState,
+    //             correctOptions: [...prevState.correctOptions.slice(0, index), value, ...prevState.correctOptions.slice(index + 1)]
+    //         }));
+    //     } else {
+    //         setNewQuestion(prevState => ({
+    //             ...prevState,
+    //             [field]: index === -1 ? value : [...prevState[field].slice(0, index), value, ...prevState[field].slice(index + 1)]
+    //         }));
+    //     }
+    // };
 
     const handleQuizChange = (e) => {
         setQuizDetails({ ...quizDetails, [e.target.name]: e.target.value })
         setQuizData({ ...quizData, [e.target.name]: e.target.value })
     };
 
-    const handleSaveQuestion = () => {
-        let tempErrors = { question: '', questionType: '', options: '', correctOptions: '' };
+    // const handleSaveQuestion = () => {
+    //     let tempErrors = { question: '', questionType: '', options: '', correctOptions: '' };
 
-        if (!newQuestion.question) {
-            tempErrors.question = 'Question is required';
-        }
-        if (!newQuestion.questionType) {
-            tempErrors.questionType = 'Question type is required';
-        }
-        if (newQuestion.options.length === 0) {
-            tempErrors.options = 'At least one option is required';
-        }
+    //     if (!newQuestion.question) {
+    //         tempErrors.question = 'Question is required';
+    //     }
+    //     if (!newQuestion.questionType) {
+    //         tempErrors.questionType = 'Question type is required';
+    //     }
+    //     if (newQuestion.options.length === 0) {
+    //         tempErrors.options = 'At least one option is required';
+    //     }
 
-        setErrors(tempErrors);
+    //     setErrors(tempErrors);
 
-        if (tempErrors.question || tempErrors.questionType || tempErrors.options || tempErrors.correctOptions) {
-            return;
-        }
+    //     if (tempErrors.question || tempErrors.questionType || tempErrors.options || tempErrors.correctOptions) {
+    //         return;
+    //     }
 
-        const requestBody = {
-            quizId: quizId,
-            question: newQuestion.question,
-            questionType: newQuestion.questionType,
-            options: newQuestion.options.map((option, index) => ({
-                option: option,
-                isCorrect: newQuestion.questionType === 'MCQ' || newQuestion.questionType === 'T/F' ? newQuestion.correctOptions[0] === option : newQuestion.correctOptions.includes(option)
-            }))
-        };
+    //     const requestBody = {
+    //         quizId: quizId,
+    //         question: newQuestion.question,
+    //         questionType: newQuestion.questionType,
+    //         options: newQuestion.options.map((option, index) => ({
+    //             option: option,
+    //             isCorrect: newQuestion.questionType === 'MCQ' || newQuestion.questionType === 'T/F' ? newQuestion.correctOptions[0] === option : newQuestion.correctOptions.includes(option)
+    //         }))
+    //     };
 
-        PostSingleQuestion(requestBody);
-        handleCloseAddQuestionModal();
-    };
+    //     PostSingleQuestion(requestBody);
+    //     handleCloseAddQuestionModal();
+    // };
     const handleSubmit = () => {
         try {
             // await GetAllQuestion();
@@ -245,16 +251,16 @@ export const Home = () => {
 
     };
 
-    const handleQuestionTypeChange = (e) => {
-        const value = e.target.value;
-        setSelectedQuestionType(value);
-        setNewQuestion(prevState => ({
-            ...prevState,
-            questionType: value,
-            options: [],
-            correctOptions: []
-        }));
-    };
+    // const handleQuestionTypeChange = (e) => {
+    //     const value = e.target.value;
+    //     setSelectedQuestionType(value);
+    //     setNewQuestion(prevState => ({
+    //         ...prevState,
+    //         questionType: value,
+    //         options: [],
+    //         correctOptions: []
+    //     }));
+    // };
 
     const handleDurationChange = (e) => {
         setDuration('SET_DURATION', e.target.value);
@@ -342,106 +348,47 @@ export const Home = () => {
     //     // window.location.reload();
     // };
 
-    const handleCloseEditQuestionModal = () => {
-        setShowEditQuestionModal(false);
-        window.location.reload();
-    };
+    
 
-    const validateField = (fieldName, value, index = null) => {
-        let tempErrors = { ...errors };
-        switch (fieldName) {
-            case 'question':
-                tempErrors.question = value ? '' : 'Question is required';
-                break;
-            case 'options':
-                if (index !== null) {
-                    if (!tempErrors.individualOptions) {
-                        tempErrors.individualOptions = [];
-                    }
-                    tempErrors.individualOptions[index] = value ? '' : `Option ${index + 1} is required`;
-                }
-                tempErrors.options = editedQuestion.options.some(option => option) ? '' : 'option is required';
-                break;
-            case 'correctOptions':
-                if (index !== null) {
-                    if (!tempErrors.individualCorrectOptions) {
-                        tempErrors.individualCorrectOptions = [];
-                    }
-                    tempErrors.individualCorrectOptions[index] = value ? '' : `Correct Option ${index + 1} is required`;
-                }
-                tempErrors.correctOptions = editedQuestion.correctOptions.some(option => option) ? '' : 'correct option is required';
-                break;
-            default:
-                break;
-        }
+    
 
-        setErrors(tempErrors);
-    };
+    // const validateUpdateQuestion = () => {
+    //     let tempErrors = { question: '', questionType: '', options: '', correctOptions: '', individualOptions: [], individualCorrectOptions: [] };
+    //     if (!editedQuestion.question) {
+    //         tempErrors.question = 'Question is required';
+    //     }
+    //     if (!editedQuestion.questionType) {
+    //         tempErrors.questionType = 'Question type is required';
+    //     }
+    //     if (editedQuestion.options.length === 0 || !editedQuestion.options.some(option => option)) {
+    //         tempErrors.options = 'option is required';
+    //     } else {
+    //         editedQuestion.options.forEach((option, index) => {
+    //             if (!option) {
+    //                 tempErrors.individualOptions[index] = `Option ${index + 1} is required`;
+    //             }
+    //         });
+    //     }
+    //     if (editedQuestion.correctOptions.length === 0 || !editedQuestion.correctOptions.some(option => option)) {
+    //         tempErrors.correctOptions = 'Correct option is required';
+    //     } else {
+    //         editedQuestion.correctOptions.forEach((option, index) => {
+    //             if (!option) {
+    //                 tempErrors.individualCorrectOptions[index] = `Correct Option ${index + 1} is required`;
+    //             }
+    //         });
+    //     }
 
-    const validateUpdateQuestion = () => {
-        let tempErrors = { question: '', questionType: '', options: '', correctOptions: '', individualOptions: [], individualCorrectOptions: [] };
-        if (!editedQuestion.question) {
-            tempErrors.question = 'Question is required';
-        }
-        if (!editedQuestion.questionType) {
-            tempErrors.questionType = 'Question type is required';
-        }
-        if (editedQuestion.options.length === 0 || !editedQuestion.options.some(option => option)) {
-            tempErrors.options = 'option is required';
-        } else {
-            editedQuestion.options.forEach((option, index) => {
-                if (!option) {
-                    tempErrors.individualOptions[index] = `Option ${index + 1} is required`;
-                }
-            });
-        }
-        if (editedQuestion.correctOptions.length === 0 || !editedQuestion.correctOptions.some(option => option)) {
-            tempErrors.correctOptions = 'Correct option is required';
-        } else {
-            editedQuestion.correctOptions.forEach((option, index) => {
-                if (!option) {
-                    tempErrors.individualCorrectOptions[index] = `Correct Option ${index + 1} is required`;
-                }
-            });
-        }
-
-        setErrors(tempErrors);
-        return !tempErrors.question && !tempErrors.questionType && !tempErrors.options && !tempErrors.correctOptions &&
-            tempErrors.individualOptions.every(e => !e) && tempErrors.individualCorrectOptions.every(e => !e);
-    };
+    //     setErrors(tempErrors);
+    //     return !tempErrors.question && !tempErrors.questionType && !tempErrors.options && !tempErrors.correctOptions &&
+    //         tempErrors.individualOptions.every(e => !e) && tempErrors.individualCorrectOptions.every(e => !e);
+    // };
 
 
 
-    const handleUpdateQuestion = () => {
-        const { quizQuestionId, questionType, ...updatedQuestion } = editedQuestion;
-        const updatedOptions = updatedQuestion.options.map((option, index) => ({
-            option,
-            isCorrect: updatedQuestion.correctOptions.includes(option)
-        }));
 
-        const requestBody = {
-            ...updatedQuestion,
-            options: updatedOptions,
-            questionType: questionType,
-            quizId: quizId,
-            quizQuestionId: quizQuestionId
-        };
 
-        if (validateUpdateQuestion()) {
-            // console.log("request body",requestBody);
-            dispatch(updateQuizQuestionRequest(requestBody))
-            // UpdateQuestion(quizQuestionId, requestBody);
-            handleCloseEditQuestionModal();
-        }
-    };
-
-    const validUpdatedQuestion = (event) => {
-        event.preventDefault();
-
-        if (validateUpdateQuestion()) {
-            handleUpdateQuestion();
-        }
-    };
+    
 
     // useEffect(() => {
     //     const newFilteredQuestions = questions.filter(question =>
@@ -469,9 +416,7 @@ export const Home = () => {
     // const currentQuestions = filteredQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
     // const currentQuestions = searchFilteredQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
 
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value.toLowerCase());
-    };
+    
 
 
     const handleBulkUpload = async (topicId) => {
@@ -484,54 +429,55 @@ export const Home = () => {
         }
     }
 
-    const handleAddCorrectOption = () => {
-        if (numCorrectOptions < newQuestion.options.length) {
-            setNumCorrectOptions(numCorrectOptions + 1);
-            setNewQuestion(prevState => ({
-                ...prevState,
-                correctOptions: [...prevState.correctOptions, ''],
-            }));
-        }
-    };
+    // const handleAddCorrectOption = () => {
+    //     if (numCorrectOptions < newQuestion.options.length) {
+    //         setNumCorrectOptions(numCorrectOptions + 1);
+    //         setNewQuestion(prevState => ({
+    //             ...prevState,
+    //             correctOptions: [...prevState.correctOptions, ''],
+    //         }));
+    //     }
+    // };
 
-    const handleRemoveCorrectOption = (index) => {
-        if (numCorrectOptions > 1) {
-            setNumCorrectOptions(numCorrectOptions - 1);
-            const updatedCorrectOptions = [...newQuestion.correctOptions];
-            updatedCorrectOptions.splice(index, 1);
-            setNewQuestion(prevState => ({
-                ...prevState,
-                correctOptions: updatedCorrectOptions,
-            }));
-        }
-    };
+    // const handleRemoveCorrectOption = (index) => {
+    //     if (numCorrectOptions > 1) {
+    //         setNumCorrectOptions(numCorrectOptions - 1);
+    //         const updatedCorrectOptions = [...newQuestion.correctOptions];
+    //         updatedCorrectOptions.splice(index, 1);
+    //         setNewQuestion(prevState => ({
+    //             ...prevState,
+    //             correctOptions: updatedCorrectOptions,
+    //         }));
+    //     }
+    // };
 
-    const handleAddOption = () => {
-        if (numOptions < 8) {
-            setNumOptions(numOptions + 1);
-            setNewQuestion(prevState => ({
-                ...prevState,
-                options: [...prevState.options, ''],
-            }));
-        }
-    };
+    // const handleAddOption = () => {
+    //     if (numOptions < 8) {
+    //         setNumOptions(numOptions + 1);
+    //         setNewQuestion(prevState => ({
+    //             ...prevState,
+    //             options: [...prevState.options, ''],
+    //         }));
+    //     }
+    // };
 
-    const handleRemoveOption = (index) => {
-        if (numOptions > 5) {
-            setNumOptions(numOptions - 1);
-            const updatedOptions = [...newQuestion.options];
-            updatedOptions.splice(index, 1);
-            setNewQuestion(prevState => ({
-                ...prevState,
-                options: updatedOptions,
-            }));
-        }
-    };
+    // const handleRemoveOption = (index) => {
+    //     if (numOptions > 5) {
+    //         setNumOptions(numOptions - 1);
+    //         const updatedOptions = [...newQuestion.options];
+    //         updatedOptions.splice(index, 1);
+    //         setNewQuestion(prevState => ({
+    //             ...prevState,
+    //             options: updatedOptions,
+    //         }));
+    //     }
+    // };
 
     const handleNavigate = () => {
         sessionStorage.removeItem("quizId");
         sessionStorage.removeItem("topicId");
         navigate('/')
+        
     }
 
     return (
@@ -540,7 +486,6 @@ export const Home = () => {
                 <button class="btn btn-light" style={{ marginLeft: "95%", marginTop: "5%", backgroundColor: "#365486", color: "white", width: '50' }} onClick={() => { handleNavigate() }} >Back</button>
             </div>
             <AdminNavbar />
-            <input id='search' type="search" placeholder="Search..." className='search-box' onChange={handleSearchChange} />
             <form className=' main-content'>
                 <div className="card" id="QuizCard">
                     <div className="card-body">
@@ -585,26 +530,15 @@ export const Home = () => {
                     </div>
                 </div>
             </form>
-
-            <div className="form-group row mt-4">
-                <div className="col-sm-2" id="filter">
-                    <select id="questionType" className="form-control" value={selectedQuestionType} onChange={(e) => setSelectedQuestionType(e.target.value)}>
-                        <option value="" disabled selected>Filter by question type</option>
-                        <option value="">All</option>
-                        <option value="MCQ">MCQ</option>
-                        <option value="MSQ">MSQ</option>
-                        <option value="TF">True/False</option>
-                    </select>
-                </div>
-            </div>
-
             {/* --------------------------------------------------------------*/}
+            {quizId? 
             <div className='question-template-container'>
-                {/* <QuestionTemplateView/> */}
-            </div>
-            <div>
+            <QuestionTemplateView/>
+        </div> : <div></div>
+            }
+            {quizId? <div>
                 <button onClick={handleSubmit} className="btn btn-light mt-3 mb-5 float-left" style={{ backgroundColor: "#365486", color: "white", marginLeft: "92%" }}>Proceed</button>
-            </div>
+            </div> : <div></div>}
             {/* DeleteQuiz */}
             <Modal show={showQuizDeleteModal} onHide={handleCloseQuizDeleteModal}>
                 <Modal.Header style={{ backgroundColor: "#23275c", color: "whitesmoke" }}>
@@ -671,193 +605,9 @@ export const Home = () => {
             </Modal>
             {/* AddSingleQuestion */}
 
-            <Modal show={showEditQuestionModal} onHide={handleCloseEditQuestionModal}>
-                <Modal.Header closeButton style={{ backgroundColor: "#23275c", color: "whitesmoke" }}>
-                    <Modal.Title><h5>Edit Question</h5></Modal.Title>
-                </Modal.Header>
-                <Modal.Body style={{ backgroundColor: "rgb(237, 231, 231)" }}>
-                    <div className="form-group">
-                        <label>Question:</label>
-                        <input className='form-control' type="text" value={editedQuestion.question} onChange={(e) => {
-                            setEditedQuestion({ ...editedQuestion, question: e.target.value });
-                            validateField('question', e.target.value);
-                        }} />
-                        {errors.question && <div style={{ color: "red" }}>{errors.question}</div>}
-                    </div>
-                    {editedQuestion.options.map((option, index) => (
-                        <div className="form-group" key={index}>
-                            <label>Option {index + 1}:</label>
-                            <input className='form-control' type="text" value={option} onChange={(e) => {
-                                const updatedOptions = [...editedQuestion.options];
-                                updatedOptions[index] = e.target.value;
-                                setEditedQuestion({ ...editedQuestion, options: updatedOptions });
-                                // validateField('options', updatedOptions);
-                                validateField('options', e.target.value);
-                            }} />
-                            {errors.individualoptions && errors.individualOptions[index] && <div style={{ color: "red" }}>{errors.individualOptions[index]}</div>}
-                        </div>
-                    ))}
-                    {errors.options && <div style={{ color: "red" }}>{errors.options}</div>}
-                    <div className="form-group">
-                        <label>Correct Options:</label>
-                        {editedQuestion.correctOptions.map((option, index) => (
-                            <input
-                                key={index}
-                                className='form-control mt-2'
-                                type="text"
-                                value={option}
-                                onChange={(e) => {
-                                    const updatedCorrectOptions = [...editedQuestion.correctOptions];
-                                    updatedCorrectOptions[index] = e.target.value;
-                                    setEditedQuestion({ ...editedQuestion, correctOptions: updatedCorrectOptions });
-                                    // validateField('correctOptions', updatedCorrectOptions);
-                                    validateField('correctOptions', e.target.value, index);
-                                }}
-                            />
-                            // {errors.individualCorrectOptions && errors.individualCorrectOptions[index] && <div style={{ color: "red" }}>{errors.individualCorrectOptions[index]}</div>}
-                        ))}
-                        {errors.correctOptions && <div style={{ color: "red" }}>{errors.correctOptions}</div>}
-                    </div>
-                </Modal.Body>
-                <Modal.Footer style={{ backgroundColor: "rgb(237, 231, 231)" }}>
-                    <Button variant="secondary" onClick={handleCloseEditQuestionModal}>Close</Button>
-                    <Button variant="primary" onClick={validUpdatedQuestion}>Save Changes</Button>
-                </Modal.Footer>
-            </Modal>
+            
 
-            <Modal show={showAddQuestionModal} onHide={handleCloseAddQuestionModal}>
-                <Modal.Header closeButton style={{ backgroundColor: "#23275c", color: "whitesmoke" }}>
-                    <Modal.Title>Add New Question</Modal.Title>
-                </Modal.Header>
-                <Modal.Body style={{ backgroundColor: "rgb(237, 231, 231)" }}>
-                    <div className="form-group">
-                        <label>Question Type:</label>
-                        <select className='form-control' value={selectedQuestionType} onChange={handleQuestionTypeChange}>
-                            <option value="">Select Question Type</option>
-                            <option value="MSQ">Multiple Select Question (MSQ)</option>
-                            <option value="MCQ">Multiple Choice Question (MCQ)</option>
-                            <option value="T/F">True/False (T/F)</option>
-                        </select>
-                        {errors.questionType && <div style={{ color: "red" }}>{errors.questionType}</div>}
-                    </div>
-
-                    {selectedQuestionType === 'MSQ' && (
-                        <>
-                            <div className="form-group">
-                                <label>Question:</label>
-                                <input className='form-control' type="text" value={newQuestion.question} onChange={(e) => handleChange(-1, 'question', e.target.value)} />
-                            </div>
-                            {[...Array(numOptions)].map((_, index) => (
-                                <div className="form-group" key={index}>
-                                    <label>Option {index + 1}:</label>
-                                    <div className="input-group">
-                                        <input className='form-control' type="text" value={newQuestion.options[index] || ''} onChange={(e) => handleChange(index, 'options', e.target.value)} />
-                                        {index >= 5 && <div className="input-group-append">
-                                            <button className="btn btn-danger" onClick={() => handleRemoveOption(index)}>
-                                                <FaMinus />
-                                            </button>
-                                        </div>}
-                                    </div>
-                                </div>
-                            ))}
-                            <div className="form-group">
-                                <button className="btn btn-primary" onClick={handleAddOption}>
-                                    <FaPlus /> Add Option
-                                </button>
-                            </div>
-                            {[...Array(numCorrectOptions)].map((_, index) => (
-                                <div className="form-group" key={index}>
-                                    <label>Correct Option {index + 1}:</label>
-                                    <div className="input-group">
-                                        <select
-                                            className='form-control'
-                                            value={newQuestion.correctOptions[index] || ''}
-                                            onChange={(e) => handleChange(index, 'correctOptions', e.target.value)}
-                                        >
-                                            <option value="">Select Correct Option</option>
-                                            {newQuestion.options.map((option, optionIndex) => (
-                                                <option key={optionIndex} value={option}>{option}</option>
-                                            ))}
-                                        </select>
-                                        {index >= 1 && (
-                                            <div className="input-group-append">
-                                                <button className="btn btn-danger" onClick={() => handleRemoveCorrectOption(index)}>
-                                                    <FaMinus />
-                                                </button>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            ))}
-                            <div className="form-group">
-                                <button className="btn btn-primary" onClick={handleAddCorrectOption}>
-                                    <FaPlus /> Add Correct Option
-                                </button>
-                            </div>
-                        </>
-                    )}
-                    {selectedQuestionType === 'MCQ' && (
-                        <>
-                            <div className="form-group">
-                                <label>Question:</label>
-                                <input className='form-control' type="text" value={newQuestion.question} onChange={(e) => handleChange(-1, 'question', e.target.value)} />
-                                {errors.question && <div style={{ color: "red" }}>{errors.question}</div>}
-                            </div>
-                            {[...Array(4)].map((_, index) => (
-                                <div className="form-group" key={index}>
-                                    <label>Option {index + 1}:</label>
-                                    <input className='form-control' type="text" value={newQuestion.options[index] || ''} onChange={(e) => handleChange(index, 'options', e.target.value)} />
-                                    {errors.options && <div style={{ color: "red" }}>{errors.options}</div>}
-                                </div>
-                            ))}
-
-                            <div className="form-group">
-                                <label>Correct Option:</label>
-                                <select className='form-control' value={newQuestion.correctOptions[0] || ''} onChange={(e) => handleChange(0, 'correctOptions', e.target.value)}>
-                                    <option value="">Select Correct Option</option>
-                                    {newQuestion.options.map((option, index) => (
-                                        <option key={index} value={option}>{option}</option>
-                                    ))}
-                                </select>
-                                {errors.correctOptions && <div style={{ color: "red" }}>{errors.correctOptions}</div>}
-                            </div>
-                        </>
-                    )}
-                    {selectedQuestionType === 'T/F' && (
-                        <>
-                            <div className="form-group">
-                                <label>Question:</label>
-                                <input className='form-control' type="text" value={newQuestion.question} onChange={(e) => handleChange(-1, 'question', e.target.value)} />
-                                {errors.question && <div style={{ color: "red" }}>{errors.question}</div>}
-                            </div>
-                            {[...Array(2)].map((_, index) => (
-                                <div className="form-group" key={index}>
-                                    <label>Option {index + 1}:</label>
-                                    <input className='form-control' type="text" value={newQuestion.options[index] || ''} onChange={(e) => handleChange(index, 'options', e.target.value)} />
-                                    {errors.options && <div style={{ color: "red" }}>{errors.options}</div>}
-                                </div>
-                            ))}
-                            <div className="form-group">
-                                <label>Correct Option:</label>
-                                {errors.correctOptions && <div style={{ color: "red" }}>{errors.correctOptions}</div>}
-                                <select className='form-control' value={newQuestion.correctOptions[0] || ''} onChange={(e) => handleChange(0, 'correctOptions', e.target.value)}>
-                                    <option value="">Select Correct Option</option>
-                                    {newQuestion.options.map((option, index) => (
-                                        <option key={index} value={option}>{option}</option>
-                                    ))}
-
-                                </select>
-                            </div>
-
-                        </>
-                    )}
-                </Modal.Body>
-                <Modal.Footer style={{ backgroundColor: "rgb(237, 231, 231)" }}>
-                    <Button variant="secondary" onClick={handleCloseAddQuestionModal}>Close</Button>
-                    <Button variant="primary" onClick={() => { handleSaveQuestion() }}>Save</Button>
-
-                </Modal.Footer>
-            </Modal>
+            
 
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>

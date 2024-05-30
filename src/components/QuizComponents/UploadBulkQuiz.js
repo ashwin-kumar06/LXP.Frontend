@@ -8,18 +8,18 @@ import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchQuizIdRequest } from '../../actions/FetchQuizIdAction';
+import { useSelector } from 'react-redux';
+
 const UploadBulkQuiz = () => {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  // const quizId = searchParams.get('quizId');
-  const topicId = searchParams.get('topicId');
-  const [quizId, setQuizId] = useState('')
+
+  const dispatch = useDispatch();
+  const topicId = sessionStorage.getItem('topicId');
   const [files, setFiles] = useState(undefined);
   const inputref = useRef();
   const navigate = useNavigate();
   const [importedQuestions, setImportedQuestions] = useState([]);
   const allowedFileTypes = ['.xlsx'];
-const dispatch = useDispatch();
+
 
   useEffect(() => {
     fetchQuizId(topicId)
@@ -29,6 +29,10 @@ const dispatch = useDispatch();
     dispatch(fetchQuizIdRequest(topicId));
     // setQuizId(response);
   }
+
+  const quizId = useSelector((state) => state.quizId.quizId);
+  console.log("upload page",quizId);
+  sessionStorage.setItem('quizId',quizId);
 
   const handleDragOver = (event) => {
     event.preventDefault();
@@ -59,7 +63,7 @@ const dispatch = useDispatch();
     e.preventDefault();
     console.log("handleFileUpload: ", quizId)
     BulkUploadQuestion(files, quizId);
-    navigate(`/createquiz?quizId=${quizId}&topicId=${topicId}`)
+    navigate(`/createquiz`)
   };
   return (
     <>

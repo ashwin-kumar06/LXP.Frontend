@@ -15,7 +15,6 @@ const quizIdReducer = (state = intialQuizIdState, action) => {
                 loading: true
             };
         case FETCH_QUIZ_ID_SUCCESS:
-            console.log("reducer",action.payload);
             return {
                 ...state,
                 loading: false,
