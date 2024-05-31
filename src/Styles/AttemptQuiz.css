@@ -1,14 +1,12 @@
-/* AttemptQuiz.css */
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
   
-  body {
+  .attempt-quiz-page {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    /* background-color: #f4f4f4; */
     padding: 20px;
   }
 
@@ -17,6 +15,7 @@
     text-align: center;
     font-weight: bold;
     margin-top: 30px;
+    font-size:40px;
   }
   
   .attempt-quiz-page {
@@ -50,7 +49,7 @@
     margin-right: 20px;
     height: 300px;
     border-radius: 5px;
-    margin-top: 4%;
+    /* margin-top: 20px; */
   }
   
   .navbar button {
@@ -69,7 +68,7 @@
   }
   
   /* Main content styling */
-  .main-content {
+  .main-content1 {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -81,7 +80,7 @@
   
   .question-container {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     padding: 25px;
     background-color: #fafafa;
     border-radius: 5px;
@@ -122,8 +121,8 @@
     margin-top: 20px;
     position: absolute;
     /* align-self: flex-end;  */
-    bottom: 20px;
-    left: 93%;
+    bottom: 80px;
+    left: 94%;
     transform: translateX(-50%);
   }
   

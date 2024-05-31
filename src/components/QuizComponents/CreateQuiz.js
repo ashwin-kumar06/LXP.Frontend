@@ -24,10 +24,7 @@ import QuestionTemplateView from '../../View/QuestionTemplateView';
 export const Home = () => {
     const quizId = sessionStorage.getItem('quizId');
     const topicId = sessionStorage.getItem('topicId');
-    // const [quizId, setQuizId] = useState();
-    // if(quiz != null){
-    //     setQuizId(quiz);
-    // }
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [showOptions, setShowOptions] = useState(false);
@@ -65,7 +62,7 @@ export const Home = () => {
 
 
     
-    const [isQuizEditable, setIsQuizEditable] = useState( !quizId == null);
+    const [isQuizEditable, setIsQuizEditable] = useState( !quizId);
 
     console.log("create quiz Id: ", quizId);
 
@@ -257,16 +254,14 @@ export const Home = () => {
                 </div>
             </form>
             {/* --------------------------------------------------------------*/}
-            {quizId === null ?  
+            {quizId? 
             <div className='question-template-container'>
             <QuestionTemplateView/>
         </div> : <div></div>
             }
-            {quizId === null ? 
-             <div>
+            {quizId ? <div>
                 <button onClick={handleSubmit} className="btn btn-light mt-3 mb-5 float-left" style={{ backgroundColor: "#365486", color: "white", marginLeft: "92%" }}>Proceed</button>
-            </div> : <div></div>
-            }
+            </div> : <div></div>}
             {/* DeleteQuiz */}
             <Modal show={showQuizDeleteModal} onHide={handleCloseQuizDeleteModal}>
                 <Modal.Header style={{ backgroundColor: "#23275c", color: "whitesmoke" }}>
@@ -348,6 +343,7 @@ export const Home = () => {
 };
 
 export default Home;
+
 
 
 

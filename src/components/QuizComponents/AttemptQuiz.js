@@ -45,7 +45,7 @@ export const AttemptQuiz = () => {
             <p>No questions available</p>
           )}
         </div>
-        <div className="main-content">
+        <div className="main-content1">
           {questions && questions.length > 0 ? (
             <>
               <div className="question-container">
