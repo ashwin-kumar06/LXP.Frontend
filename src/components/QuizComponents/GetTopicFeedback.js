@@ -25,7 +25,7 @@ export const GetTopicFeedback = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const navigate = useNavigate();
-  const topicId = searchParams.get("topicId");
+  const topicId = sessionStorage.getItem('topicId')
   // Access the quizfeedback array from the Redux state
   const { topicfeedback } = useSelector((state) => state.fetchtopicfeedback);
   const dispatch = useDispatch();
@@ -72,6 +72,8 @@ export const GetTopicFeedback = () => {
   };
   const handleCloseEditQuestionModal = () => {
     setShowEditfbQuestionModal(false);
+    window.location.reload();
+
   };
 
   const validateField = (fieldName, value, index = null) => {
@@ -132,12 +134,13 @@ export const GetTopicFeedback = () => {
     console.log("requestBody", requestBody);
     console.log("quizre", topicFeedbackId);
     dispatch(updatetopicfeedbackRequest(topicFeedbackId, requestBody));
+    handleCloseEditQuestionModal();
   };
 
   const validUpdatedQuestion = (event) => {
     event.preventDefault();
-    debugger;
     handleUpdateQuestion();
+    
   };
   const handleOpenEditQuestionModal = async (TopicFeedbackQuestionId) => {
     // setShowEditfbQuestionModal(true);

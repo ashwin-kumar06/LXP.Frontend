@@ -35,17 +35,17 @@ function CoursePage() {
 
   const handleFeedback = (topicId) => {
     try {
-      navigate(`/topicfeedback?topicId=${topicId}`);
+      sessionStorage.setItem('topicId', topicId);
+      navigate(`/topicfeedback`);
     } catch (error) {
       console.error('Error navigating:', error);
     }
   };
 
-  const handleQuizFeedback = async (topicId) => {
+  const handleQuizFeedback = async (quizId) => {
     try {
-      // dispatch(fetchQuizById(topicId));
-      // setQuizId(id);
-      // navigate(`/quizfeedback?quizId=${id}&topicId=${topicId}`);
+      sessionStorage.setItem('quizId', quizId);
+      navigate(`/quizfeedback`);
     } catch (error) {
       console.error('Error navigating:', error);
     }

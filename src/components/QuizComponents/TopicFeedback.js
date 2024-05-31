@@ -9,12 +9,13 @@ import { createtopicRequest } from '../../actions/TopicFeedbackAction';
 import { useLocation } from 'react-router-dom';
  
 export const TopicFeedback = () => {
-    const location = useLocation();
+  
+ 
+    const topicId = sessionStorage.getItem('topicId');
+    console.log("topic feed",topicId);
     const [errorfb, setErrorfb] = useState('');
     const [loading, setLoading] = useState('');
     const [showAddfbModal, setShowAddfbModal] = useState(false);
-    const searchParams = new URLSearchParams(location.search);
-    const topicId = searchParams.get('topicId');
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -83,7 +84,7 @@ export const TopicFeedback = () => {
  
     const handleCloseAddfbQuestionModal = () => {
         setShowAddfbModal(false);
-        window.location.reload();
+        // window.location.reload();
     };
     const handleChange = (index, field, value) => {
         const updatedoptions = [...fbQuestion.options];

@@ -10,14 +10,13 @@ import ReviewQuestions from '../../components/QuizComponents/ReviewQuestions';
 
  
 export const QuizFeedback = () => {
-    const location = useLocation();
+
     const [errorfb, setErrorfb] = useState('');
     const [loading, setLoading] = useState('');
     const [showAddModal, setShowAddModal] = useState(false);
     const [showAddfbModal, setShowAddfbModal] = useState(false);
-    const searchParams = new URLSearchParams(location.search);
-    const quizId = searchParams.get('quizId');
-    const topicId = searchParams.get('topicId');
+    const quizId = sessionStorage.getItem('quizId');
+    const topicId = sessionStorage.getItem('topicId');
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const handleSubmit = () => {

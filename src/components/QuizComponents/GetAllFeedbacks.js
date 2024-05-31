@@ -159,7 +159,7 @@ export const GetAllFeedbacks = () => {
     //   if (validateUpdateQuestion()) {
     handleUpdateQuestion();
     setShowEditfbQuestionModal(false);
-    // window.location.reload();
+    window.location.reload();
     //   }
   };
 

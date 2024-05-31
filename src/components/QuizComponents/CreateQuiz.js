@@ -370,11 +370,7 @@
 // export default Home;
 
 
-
-
-
-
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { ImFolderUpload } from "react-icons/im";
@@ -384,14 +380,14 @@ import { FaTrashCan } from "react-icons/fa6";
 import { FaUpload } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
-import { useDispatch } from 'react-redux';
+import {useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import '../../Styles/CreateQuiz.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ValidationQuizTitle, ValidationDuration, ValidationGrade, ValidationAttempts } from '../../utils/ValidationCreateQuiz';
 import { DeleteQuizDetails } from '../../middleware/api';
 import { GetQuizDetails } from '../../middleware/FetchQuizApi';
-import { setQuizDetailsRequest } from '../../actions/CreateQuizAction';
+import {setQuizDetailsRequest } from '../../actions/CreateQuizAction';
 import { useNavigate } from 'react-router-dom';
 import { editQuizDetailsRequest } from '../../actions/EditQuizAction';
 import QuestionTemplateView from '../../View/QuestionTemplateView';
@@ -400,10 +396,7 @@ import QuestionTemplateView from '../../View/QuestionTemplateView';
 export const Home = () => {
     const quizId = sessionStorage.getItem('quizId');
     const topicId = sessionStorage.getItem('topicId');
-    // const [quizId, setQuizId] = useState();
-    // if(quiz != null){
-    //     setQuizId(quiz);
-    // }
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [showOptions, setShowOptions] = useState(false);
@@ -440,8 +433,8 @@ export const Home = () => {
     });
 
 
-
-    const [isQuizEditable, setIsQuizEditable] = useState(quizId !== null);
+    
+    const [isQuizEditable, setIsQuizEditable] = useState( !quizId);
 
     console.log("create quiz Id: ", quizId);
 
@@ -581,7 +574,7 @@ export const Home = () => {
     const handleNavigate = () => {
         sessionStorage.removeItem("quizId");
         sessionStorage.removeItem("topicId");
-        navigate('/')
+        navigate('/')  
     }
 
     return (
@@ -633,16 +626,14 @@ export const Home = () => {
                 </div>
             </form>
             {/* --------------------------------------------------------------*/}
-            {quizId == null ? <div></div> :
-                <div className='question-template-container'>
-                    <QuestionTemplateView />
-                </div>
-            }
-            {quizId == null? <div> </div> :
+            {quizId? 
             <div className='question-template-container'>
-            <button onClick={handleSubmit} className="btn btn-light mt-3 mb-5 float-left" style={{ backgroundColor: "#365486", color: "white", marginLeft: "92%" }}>Proceed</button>
-            </div>
+            <QuestionTemplateView/>
+        </div> : <div></div>
             }
+            {quizId ? <div>
+                <button onClick={handleSubmit} className="btn btn-light mt-3 mb-5 float-left" style={{ backgroundColor: "#365486", color: "white", marginLeft: "92%" }}>Proceed</button>
+            </div> : <div></div>}
             {/* DeleteQuiz */}
             <Modal show={showQuizDeleteModal} onHide={handleCloseQuizDeleteModal}>
                 <Modal.Header style={{ backgroundColor: "#23275c", color: "whitesmoke" }}>
