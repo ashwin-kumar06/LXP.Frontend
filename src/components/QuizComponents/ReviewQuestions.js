@@ -166,7 +166,7 @@ export const ReviewQuestions = () => {
 
     return (
         <div>
-            <button class="btn btn-light" style={{ marginLeft: "95%", marginTop: "5%", backgroundColor: "#365486", color: "white", width: '50' }} onClick={() => { handleNavigate() }} >Back</button>
+            <button class="btn btn-light" style={{ marginLeft: "95%", marginTop: "5%", backgroundColor: "#365486", color: "white", width: '50' }} onClick={() => { handleNavigate() }}>Back</button>
             <div>
                 <Row>
                     <AdminNavbar />
@@ -219,7 +219,7 @@ export const ReviewQuestions = () => {
                                         </div>
                                     ))}
                                     <button onClick={handleSubmit} className="btn btn-light mt-3 mb-5 float-right" style={{ backgroundColor: "#365486", color: "white" }}>Go to Edit Page</button>
-                                    <button onClick={handleTypeChange} className="btn btn-light mt-1 mb-5 float-right" style={{ backgroundColor: "#365486", color: "white", marginLeft: "70%" }}>Review & Publish</button>
+                                    <button onClick={handleTypeChange} className="btn btn-light mb-5 float-right" style={{ backgroundColor: "#365486", color: "white", marginLeft: "80%" , marginTop:"-15%"}}>Review & Publish</button>
                                 </div>
                             )}
                         </div>

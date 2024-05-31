@@ -8,7 +8,7 @@ export const FetchQuizById = ({dispatch}) => (next) => async (action) => {
         console.log("sending topicId",action.payload);
         const response = await axios.get(`http://localhost:5199/api/Quiz/topic/${action.payload}`);
         console.log("api quiz id:",response.data);
-        dispatch(fetchQuizIdSuccess(response.data));
+        dispatch(fetchQuizIdSuccess(response.data.data));
       } catch (error) {
         console.log("Fetching quizid: ", error.message);
         dispatch(fetchQuizIdFailure(error.message));  

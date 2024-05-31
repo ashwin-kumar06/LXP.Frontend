@@ -9,7 +9,7 @@ export const CreateQuizApi = ({ dispatch }) => (next) => async (action) => {
             console.log("Creating",action.payload)
             const response = await axios.post(API_URL,action.payload);
             console.log('feed Post API Response:', response.data);
-            dispatch(setQuizDetailsSuccess(response.data));
+            dispatch(setQuizDetailsSuccess(response.data.data));
         } catch (error) {
             console.error('API Error:', error.message);
             dispatch(setQuizDetailsFailure(error.message));

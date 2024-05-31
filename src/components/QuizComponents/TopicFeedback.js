@@ -112,8 +112,10 @@ export const TopicFeedback = () => {
             <AdminNavbar />
             <div>
             <div>
-            <h4 style={{marginLeft:"10%" , marginTop:"-40%"}}> <b>Add Feedback Question for the Topic </b></h4>
-            <button onClick={handleOpenAddfbQuestionModal} className="btn btn-light mt-3 mb-5 float-right" style={{backgroundColor:"#365486", color:"white",marginLeft:"45%"}}>Add More Feedback Questions</button>
+            <h4 className="text" style={{marginLeft:"10%" , marginTop:"-40%"}}><b>Feedback Questions for the Topic</b></h4>
+            <button onClick={handleOpenAddfbQuestionModal} className="btn btn-light mt-3 mb-5 float-right" style={{backgroundColor:"#365486", color:"white",marginLeft:"43%"}}>Add Feedback Questions</button>
+            {/* <h4 style={{marginLeft:"10%" , marginTop:"-40%"}}> <b>Add Feedback Question for the Topic </b></h4>
+            <button onClick={handleOpenAddfbQuestionModal} className="btn btn-light mt-3 mb-5 float-right" style={{backgroundColor:"#365486", color:"white",marginLeft:"45%"}}>Add More Feedback Questions</button> */}
             </div>
            
             <Modal show={showAddfbModal} onHide={handleCloseAddfbQuestionModal}>

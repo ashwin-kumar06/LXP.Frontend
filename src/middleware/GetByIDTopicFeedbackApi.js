@@ -22,7 +22,7 @@ export const GetByIDTopicFeedbackApi =
         const url = `${API_URL}/${action.payload}`;
         const response = await axios.get(url);
         console.log("Get API Response:", response.data); // Log the response data
-        dispatch(fetchtopicfeedbackSuccess(response.data)); // Dispatch success action with the response data
+        dispatch(fetchtopicfeedbackSuccess(response.data.data)); // Dispatch success action with the response data
       } catch (error) {
         console.error("API Error:", error.message);
         dispatch(fetchtopicfeedbackFailure(error.message));

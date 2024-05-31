@@ -6,7 +6,7 @@ import '../Styles/CreateQuiz.css'
 function CoursePageView() {
   return (
     <>
-        <CoursePage />
+        <CoursePage/>
     </>
   );
 }

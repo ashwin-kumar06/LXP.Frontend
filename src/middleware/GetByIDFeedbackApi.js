@@ -20,7 +20,7 @@ export const GetByIDFeedbackApi =
         const url = `${API_URL}/${action.payload}`;
         const response = await axios.get(url);
         console.log("Get API Response:", response.data); // Log the response data
-        dispatch(fetchquizfeedbackSuccess(response.data)); // Dispatch success action with the response data
+        dispatch(fetchquizfeedbackSuccess(response.data.data)); // Dispatch success action with the response data
         debugger;
       } catch (error) {
         console.error("API Error:", error.message);

@@ -9,6 +9,9 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchQuizIdRequest } from '../../actions/FetchQuizIdAction';
 import { useSelector } from 'react-redux';
+import Exceltemplate from "../../assets/ExcelTemplate/Bulk upload format.xlsx"
+import Button from 'react-bootstrap/Button';
+import { FcInfo } from "react-icons/fc";
 
 const UploadBulkQuiz = () => {
 
@@ -31,8 +34,8 @@ const UploadBulkQuiz = () => {
   }
 
   const quizId = useSelector((state) => state.quizId.quizId);
-  console.log("upload page",quizId);
-  sessionStorage.setItem('quizId',quizId);
+  console.log("upload page", quizId);
+  sessionStorage.setItem('quizId', quizId);
 
   const handleDragOver = (event) => {
     event.preventDefault();
@@ -69,7 +72,7 @@ const UploadBulkQuiz = () => {
     <>
       <AdminNavbar />
       <div id='uploadContent'>
-        <h5 id="heading" style={{ marginTop: "-40%", marginLeft: "25%" }}>Upload Question from device </h5>
+        <h5 id="heading" style={{ marginTop: "-38%", marginLeft: "25%" }}>Upload Question from device </h5>
         <div id='dropzone'
           onDragOver={handleDragOver}
           onDrop={handleDrop}
@@ -81,11 +84,11 @@ const UploadBulkQuiz = () => {
           <button class="btn btn-light" style={{ backgroundColor: "#365486", color: "white" }} onClick={(e) => { e.preventDefault(); inputref.current.click() }}>Browse Files</button>
         </div>
         <div style={{ marginLeft: "25%", marginTop: "2%" }}>
-          <h5 id="heading">Supported File formats : .xlsx</h5>
+          <h6 id="heading">Supported File formats : .xlsx</h6>
           <br />
           {files ? <>
             <div >
-              <h6>Selected File </h6>
+              <h5 id='heading'>Selected File</h5>
               {Array.from(files).map((file, idx) => <p key={idx}>{file.name}</p>)}
             </div></> : <>
           </>
@@ -95,13 +98,16 @@ const UploadBulkQuiz = () => {
         <div className="position-absolute start-50 translate-middle">
           <button
             style={{ backgroundColor: "#365486", color: "white" }}
-            className="btn btn-light mt-3"
+            className="btn btn-light mt-3 ms-5"
             type="submit"
             onClick={handleFileUpload}
             disabled={!files || files.length === 0}
           >
             Upload File
           </button>
+          <div id='temp' >
+          <a  href={Exceltemplate} download="Bulk upload template" target="_blank" rel="noreferrer"><FcInfo size="25px"/><Button variant='default'><h6>Download Question Format</h6></Button></a>
+          </div>
         </div>
       </div>
     </>

@@ -9,8 +9,7 @@ import GetAllFeedbackReducer from "../reducers/GetAllFeedbackReducer";
 import { GetAllFeedbackApi } from "../middleware/GetAllFeedbackApi";
 import GetTopicFeedbackReducer from "../reducers/GetTopicFeedbackReducer";
 import { GetTopicFeedbackApi } from "../middleware/GetTopicFeedbackApi";
-import { DeleteQuizQuestionsApi,GetAllQuestion,UpdateQuizQuestionsApi,} from "../middleware/QuestionApi";
-import questionReducer from "../reducers/FetchQuizQuestionsReducer.js";
+import { DeleteQuizQuestionsApi, GetAllQuestion, UpdateQuizQuestionsApi, } from "../middleware/QuestionApi";
 import { CreateQuizApi } from "../middleware/CreateQuizApi";
 import { FetchQuizById } from "../middleware/FetchQuizIdApi";
 import fetchQuizQuestionsReducer from "../reducers/FetchQuizQuestionsReducer.js";
@@ -30,6 +29,9 @@ import DeleteQuizFeedbackReducer from "../reducers/DeleteQuizFeedbackReducer";
 import DeleteTopicFeedbackReducer from "../reducers/DeleteTopicFeedbackReducer";
 import UpdateTopicFeedbackReducer from "../reducers/UpdateTopicFeedbackReducer";
 import GetByIDTopicFeedbackReducer from "../reducers/GetByIDTopicFeedbackReducer";
+import QuizInstructionReducer from "../reducers/QuizInstructionReducer";
+import { QuizInstructionApi } from "../middleware/QuizInstructionApi.js";
+
 
 export const rootReducer = combineReducers({
   quizId: quizIdReducer,
@@ -47,6 +49,7 @@ export const rootReducer = combineReducers({
   deletetopicfeedback: DeleteTopicFeedbackReducer,
   updatetopicfeedback: UpdateTopicFeedbackReducer,
   fetchtopicfeedbackid: GetByIDTopicFeedbackReducer,
+  fetchquizinstructions: QuizInstructionReducer
 });
 
 const store = createStore(
@@ -62,12 +65,13 @@ const store = createStore(
     TopicFeedbackApi,
     GetAllFeedbackApi,
     GetTopicFeedbackApi,
-   UpdateQuizFeedbackApi,
-  GetByIDFeedbackApi,
-   DeleteTopicFeedbackApi,
-  DeleteQuizFeedbackApi,
-  UpdateTopicFeedbackApi,
-   GetByIDTopicFeedbackApi,
+    UpdateQuizFeedbackApi,
+    GetByIDFeedbackApi,
+    DeleteTopicFeedbackApi,
+    DeleteQuizFeedbackApi,
+    UpdateTopicFeedbackApi,
+    GetByIDTopicFeedbackApi,
+    QuizInstructionApi
   )
 );
 

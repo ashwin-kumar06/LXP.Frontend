@@ -25,7 +25,7 @@
   border:2px solid #ccc;
   background-color:aliceblue;
   border-radius:5px;
-  width: 300px;
+  width:280px;
  
 }
 .card-body{
@@ -37,7 +37,7 @@ background-color: rgb(237, 231, 231);
   width:50px;
   height:55px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius:5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,8 +50,8 @@ background-color: rgb(237, 231, 231);
 
 .question-grid-container {
   position:fixed; /* This will make it fixed on the page */
-  top:180px; /* Adjust this value to place it from the top */
-  left:20px; /* Adjust this value to place it from the left */
+  top:150px; /* Adjust this value to place it from the top */
+  left:120px; /* Adjust this value to place it from the left */
   z-index:900; /* This ensures it stays above other content */
 }
 
@@ -81,7 +81,8 @@ font-weight:500;
 
 .question-details-container{
   margin-top:-10%;
-  width:1000px;
+  margin-left:25%;
+  width:800px;
   position: inherit;
 }
 
