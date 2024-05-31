@@ -8,6 +8,8 @@ import GetTopicFeedback from '../components/QuizComponents/GetTopicFeedback';
 import CoursePageView from '../View/CoursePageView';
 import { QuestionTemplate } from '../components/QuizComponents/QuestionTemplate';
 import QuestionTemplateView from '../View/QuestionTemplateView';
+import QuizAttemptView from '../View/QuizAttempView';
+import AttemptQuiz from '../components/QuizComponents/AttemptQuiz';
 
 function Routing() {
     return (
@@ -16,11 +18,13 @@ function Routing() {
                 <Route path="/" element={<CoursePageView />} />
                 <Route path="/createquiz" element={<CreateQuizView />} />
                 <Route path='/questiontemplate' element={<QuestionTemplateView />} />
-                <Route path='/getallfeedback' element={<GetAllFeedbacks />} />
+                {/* <Route path='/getallfeedback' element={<GetAllFeedbacks />} /> */}
                 <Route path='/reviewquestions' element={<ReviewQuestions />} />
                 <Route path='/topicfeedback' element={<GetTopicFeedback />} />
                 <Route path='/quizfeedback' element={<GetAllFeedbacks />} />
                 <Route path='/upload' element={<UploadBulkQuiz />} />
+                <Route path='/quizattempt' element={<QuizAttemptView />} />
+                <Route path='/attemptquiz' element={<AttemptQuiz />} />
             </Routes>
         </BrowserRouter>
     )

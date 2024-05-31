@@ -15,11 +15,14 @@ import { FaMinus,FaPlus } from 'react-icons/fa';
 
 const QuestionTemplate = () => {
   const quizId = sessionStorage.getItem('quizId');
+  console.log("qt",quizId);
   // useEffect(() => {
   //   dispatch(fetchAllQuizQuestionRequest(quizId))
   // },[quizId])
   useEffect(() => {
-    fetchQuestions(quizId);
+    if(quizId != null){
+      fetchQuestions(quizId);
+    }
   }, [quizId]);
   // console.log("quiz questions", quizQuestions);
 
@@ -56,7 +59,9 @@ const QuestionTemplate = () => {
 
   const fetchQuestions = async (quizId) => {
     try {
-      dispatch(fetchAllQuizQuestionRequest(quizId))
+      if(quizId !== null){
+        dispatch(fetchAllQuizQuestionRequest(quizId))
+      }
     } catch (error) {
       console.error('Error fetching data:', error)
     }

@@ -9,7 +9,7 @@ export const TopicFeedbackApi = ({ dispatch }) => (next) => async (action) => {
       console.log("post",action.payload);
       // Assuming 'action.payload' contains the data you want to senda
       const response = await axios.post(API_URL,action.payload);
-      console.log('API Response:', response.data); // Log the response data
+      console.log('API Response:', response.data.data); // Log the response data
       dispatch(createtopicfeedbackSuccess(response.data.data)); // Dispatch success action with the response data                                             
     } catch (error) {
       console.error('API Error:', error.message);

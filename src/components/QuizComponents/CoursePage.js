@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchQuizIdRequest } from '../../actions/FetchQuizIdAction';
 
 function CoursePage() {
-  const [noQuizTopicId, setNoQuizTopicId] = useState('98f8f96d-844e-4da1-8464-204984cdd8f1');
-  const [yesQuizTopicId, setYesQuizTopicId] = useState('e3a895e4-1b3f-45b8-9c0a-98f9c0fa4996')
+  const [noQuizTopicId, setNoQuizTopicId] = useState('1b1c327f-37fb-4b1c-bb96-fb34d8853d46');
+  const [yesQuizTopicId, setYesQuizTopicId] = useState('7ae6ad72-74ef-4e5c-b7d6-5af9dd13d721')
   const quizId = useSelector((state) => state.quizId.quizId);
   const isSuccess = useSelector((state) => state.quizId.isSubmitted);
   const navigate = useNavigate();

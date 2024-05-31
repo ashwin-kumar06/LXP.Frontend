@@ -18,7 +18,7 @@ export const BulkUploadQuestion = async (files,quizId) => {
             'Content-Type': 'multipart/form-data',
           },
         });
-        console.log("BulkUploadQuestion",response.data);
+        console.log("BulkUploadQuestion",response.data.data);
       } catch (error) {
         console.error('Error uploading file:', error);
       }
@@ -30,7 +30,7 @@ export const BulkUploadQuestion = async (files,quizId) => {
 export const GetOpenEditQuestionModal = async(quizQuestionId) =>{
   try {
     const response = await axios.get(`http://localhost:5199/api/QuizQuestions/GetQuestionById?quizQuestionId=${quizQuestionId}`);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("Error:", error.message);
     throw error.message;
@@ -42,8 +42,8 @@ export const DeleteQuizQuestionsApi = ({ dispatch }) => (next) => async (action)
       try {
           console.log("deleting questionId", action.payload);
           const response = await axios.delete(`http://localhost:5199/api/QuizQuestions/DeleteQuestion?quizQuestionId=${action.payload}`);
-          console.log("api questions:",response.data);
-          dispatch(deleteQuizQuestionSuccess(response.data));
+          console.log("api questions:",response.data.data);
+          dispatch(deleteQuizQuestionSuccess(response.data.data));
       } catch (error) {
           console.log("Error fetching question: ", error.message);
           dispatch(deleteQuizQuestionFailure(error.message));
@@ -57,8 +57,8 @@ export const UpdateQuizQuestionsApi = ({ dispatch }) => (next) => async (action)
       try {
           console.log("updatingting questionId", action.payload.quizQuestionId);
           const response = await axios.put(`http://localhost:5199/api/QuizQuestions/UpdateQuestion?quizQuestionId=${action.payload.quizQuestionId}`,action.payload);
-          console.log("update api questions:",response.data);
-          dispatch(updateQuizQuestionSuccess(response.data));
+          console.log("update api questions:",response.data.data);
+          dispatch(updateQuizQuestionSuccess(response.data.data));
       } catch (error) {
           console.log("Error fetching question: ", error.message);
           dispatch(updateQuizQuestionFailure(error.message));
@@ -72,7 +72,7 @@ export const PostSingleQuestion = async(requestBody) =>{
   console.log("single question: ",requestBody)
   try {
     const response = await axios.post('http://localhost:5199/api/QuizQuestions/AddQuestion', requestBody);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("Error:", error.message);
     throw error.message;

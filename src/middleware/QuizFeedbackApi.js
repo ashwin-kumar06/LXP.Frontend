@@ -8,7 +8,7 @@ export const QuizFeedbackApi = ({ dispatch }) => (next) => async (action) => {
     try {
       console.log("post quiz",action.payload);
       const response = await axios.post(API_URL,action.payload);
-      console.log('feed Post API Response:', response.data); // Log the response data
+      console.log('feed Post API Response:', response.data.data); // Log the response data
       dispatch(createquizfeedbackSuccess(response.data.data)); // Dispatch success action with the response data                                             
     } catch (error) {
       console.error('API Error:', error.message);

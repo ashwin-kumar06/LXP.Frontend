@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../../Styles/CreateQuiz.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
+// import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { createquizfeedbackRequest, createquizfeedbackSuccess } from '../../actions/QuizFeedbackAction';
+import { createquizfeedbackRequest } from '../../actions/QuizFeedbackAction';
 import { connect, useDispatch } from 'react-redux';
 import AdminNavbar from './AdminNavbar';
 import { useLocation } from 'react-router-dom';
@@ -33,7 +33,7 @@ export const ReviewQuestions = () => {
     const handleSubmit = () => {
         try {
             // await GetAllQuestion();
-            navigate('/')
+            navigate('/createquiz')
                 ``
         } catch (error) {
             console.error('Error fetching data:', error)

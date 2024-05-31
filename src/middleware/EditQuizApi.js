@@ -8,7 +8,7 @@ export const PutQuizDetails = ({ dispatch }) => (next) => async (action) => {
     if (action.type === EDIT_QUIZ_DETAILS_REQUEST) {
         try {
             const response = await axios.put(API_URL, action.payload)
-            console.log("Quiz edited successful", response.data);
+            console.log("Quiz edited successful", response.data.data);
             dispatch(editQuizDetailsSuccess(response.data.data));
         } catch (error) {
             console.error("Error:", error.message);
