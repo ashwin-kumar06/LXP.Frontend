@@ -1,35 +1,39 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk"; // Corrected import
-import quizIdReducer from "../reducers/FetchQuizIdReducer";
-import { QuizFeedbackApi } from "../middleware/QuizFeedbackApi";
-import QuizFeedbackReducer from "../reducers/QuizFeedbackReducer";
-import TopicFeedbackReducer from "../reducers/TopicFeedbackReducer";
-import { TopicFeedbackApi } from "../middleware/TopicFeedbackApi";
-import GetAllFeedbackReducer from "../reducers/GetAllFeedbackReducer";
-import { GetAllFeedbackApi } from "../middleware/GetAllFeedbackApi";
-import GetTopicFeedbackReducer from "../reducers/GetTopicFeedbackReducer";
-import { GetTopicFeedbackApi } from "../middleware/GetTopicFeedbackApi";
-import { DeleteQuizQuestionsApi,GetAllQuestion,UpdateQuizQuestionsApi,} from "../middleware/QuestionApi";
-import questionReducer from "../reducers/FetchQuizQuestionsReducer.js";
-import { CreateQuizApi } from "../middleware/CreateQuizApi";
-import { FetchQuizById } from "../middleware/FetchQuizIdApi";
-import fetchQuizQuestionsReducer from "../reducers/FetchQuizQuestionsReducer.js";
-import { FetchQuizQuestionsApi } from "../middleware/FetchQuizQuestionsApi";
-import deleteQuizQuestionsReducer from "../reducers/DeleteQuizQuestionReducer";
-import updateQuizQuestionReducer from "../reducers/UpdateQuizQuestionReducer";
-import createQuizReducer from "../reducers/CreateQuizReducer";
-import DeleteQuizFeedbackApi from "../middleware/DeleteQuizFeedbackApi";
-import UpdateQuizFeedbackApi from "../middleware/UpdateQuizFeedbackApi";
-import GetByIDFeedbackApi from "../middleware/GetByIDFeedbackApi";
-import DeleteTopicFeedbackApi from "../middleware/DeleteTopicFeedbackApi";
-import UpdateTopicFeedbackApi from "../middleware/UpdateTopicFeedbackApi";
-import GetByIDTopicFeedbackApi from "../middleware/GetByIDTopicFeedbackApi";
-import UpdateQuizFeedbackReducer from "../reducers/UpdateQuizFeedbackReducer";
-import GetByIDQuizFeedbackReducer from "../reducers/GetByIDQuizFeedbackReducer";
-import DeleteQuizFeedbackReducer from "../reducers/DeleteQuizFeedbackReducer";
-import DeleteTopicFeedbackReducer from "../reducers/DeleteTopicFeedbackReducer";
-import UpdateTopicFeedbackReducer from "../reducers/UpdateTopicFeedbackReducer";
-import GetByIDTopicFeedbackReducer from "../reducers/GetByIDTopicFeedbackReducer";
+import quizIdReducer from "../reducers/Quiz And Feedback Module/FetchQuizIdReducer";
+import { QuizFeedbackApi } from "../middleware/Quiz And Feedback Module/QuizFeedbackApi";
+import QuizFeedbackReducer from "../reducers/Quiz And Feedback Module/QuizFeedbackReducer";
+import TopicFeedbackReducer from "../reducers/Quiz And Feedback Module/TopicFeedbackReducer";
+import { TopicFeedbackApi } from "../middleware/Quiz And Feedback Module/TopicFeedbackApi";
+import GetAllFeedbackReducer from "../reducers/Quiz And Feedback Module/GetAllFeedbackReducer";
+import { GetAllFeedbackApi } from "../middleware/Quiz And Feedback Module/GetAllFeedbackApi";
+import GetTopicFeedbackReducer from "../reducers/Quiz And Feedback Module/GetTopicFeedbackReducer";
+import { GetTopicFeedbackApi } from "../middleware/Quiz And Feedback Module/GetTopicFeedbackApi";
+import {
+  DeleteQuizQuestionsApi,
+  GetAllQuestion,
+  UpdateQuizQuestionsApi,
+} from "../middleware/Quiz And Feedback Module/QuestionApi";
+import questionReducer from "../reducers/Quiz And Feedback Module/FetchQuizQuestionsReducer.js";
+import { CreateQuizApi } from "../middleware/Quiz And Feedback Module/CreateQuizApi";
+import { FetchQuizById } from "../middleware/Quiz And Feedback Module/FetchQuizIdApi";
+import fetchQuizQuestionsReducer from "../reducers/Quiz And Feedback Module/FetchQuizQuestionsReducer.js";
+import { FetchQuizQuestionsApi } from "../middleware/Quiz And Feedback Module/FetchQuizQuestionsApi";
+import deleteQuizQuestionsReducer from "../reducers/Quiz And Feedback Module/DeleteQuizQuestionReducer";
+import updateQuizQuestionReducer from "../reducers/Quiz And Feedback Module/UpdateQuizQuestionReducer";
+import createQuizReducer from "../reducers/Quiz And Feedback Module/CreateQuizReducer";
+import DeleteQuizFeedbackApi from "../middleware/Quiz And Feedback Module/DeleteQuizFeedbackApi";
+import UpdateQuizFeedbackApi from "../middleware/Quiz And Feedback Module/UpdateQuizFeedbackApi";
+import GetByIDFeedbackApi from "../middleware/Quiz And Feedback Module/GetByIDFeedbackApi";
+import DeleteTopicFeedbackApi from "../middleware/Quiz And Feedback Module/DeleteTopicFeedbackApi";
+import UpdateTopicFeedbackApi from "../middleware/Quiz And Feedback Module/UpdateTopicFeedbackApi";
+import GetByIDTopicFeedbackApi from "../middleware/Quiz And Feedback Module/GetByIDTopicFeedbackApi";
+import UpdateQuizFeedbackReducer from "../reducers/Quiz And Feedback Module/UpdateQuizFeedbackReducer";
+import GetByIDQuizFeedbackReducer from "../reducers/Quiz And Feedback Module/GetByIDQuizFeedbackReducer";
+import DeleteQuizFeedbackReducer from "../reducers/Quiz And Feedback Module/DeleteQuizFeedbackReducer";
+import DeleteTopicFeedbackReducer from "../reducers/Quiz And Feedback Module/DeleteTopicFeedbackReducer";
+import UpdateTopicFeedbackReducer from "../reducers/Quiz And Feedback Module/UpdateTopicFeedbackReducer";
+import GetByIDTopicFeedbackReducer from "../reducers/Quiz And Feedback Module/GetByIDTopicFeedbackReducer";
 
 export const rootReducer = combineReducers({
   quizId: quizIdReducer,
