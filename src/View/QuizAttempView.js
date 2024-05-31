@@ -1,7 +1,4 @@
-// View/QuizAttemptView.js
-
 import React from 'react';
-import QuizEngine from '../components/QuizComponents/QuizEngine';
 import AttemptQuiz from '../components/QuizComponents/AttemptQuiz';
 
 const QuizAttemptView = () => {

@@ -18,8 +18,6 @@ import { FetchQuizQuestionsApi } from '../middleware/FetchQuizQuestionsApi';
 import deleteQuizQuestionsReducer from '../reducers/DeleteQuizQuestionReducer';
 import updateQuizQuestionReducer from '../reducers/UpdateQuizQuestionReducer';
 import createQuizReducer from '../reducers/CreateQuizReducer';
-import quizEngineReducer from '../reducers/QuizEngineReducer';
-import {GetQuestionsByQuizIdApi} from '../middleware/GetQuestionsByQuizIdApi';
 import AttemptQuizReducer from '../reducers/AttemptQuizReducer';
 import {fetchQuestionsMiddleware} from '../middleware/AttemptQuizApi';
 
