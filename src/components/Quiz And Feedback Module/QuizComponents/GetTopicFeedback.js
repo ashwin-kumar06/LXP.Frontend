@@ -25,7 +25,7 @@ export const GetTopicFeedback = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const navigate = useNavigate();
-  const topicId = searchParams.get("topicId");
+  const topicId = sessionStorage.getItem("topicId");
   // Access the quizfeedback array from the Redux state
   const { topicfeedback } = useSelector((state) => state.fetchtopicfeedback);
   const dispatch = useDispatch();
@@ -72,6 +72,7 @@ export const GetTopicFeedback = () => {
   };
   const handleCloseEditQuestionModal = () => {
     setShowEditfbQuestionModal(false);
+    window.location.reload();
   };
 
   const validateField = (fieldName, value, index = null) => {
@@ -118,7 +119,6 @@ export const GetTopicFeedback = () => {
   const handleUpdateQuestion = () => {
     const { topicFeedbackId, questionType, ...updatedQuestion } =
       editedQuestion;
-    debugger;
     const updatedOptions = updatedQuestion.options.map((optionText, index) => ({
       optionText,
     }));
@@ -132,21 +132,20 @@ export const GetTopicFeedback = () => {
     console.log("requestBody", requestBody);
     console.log("quizre", topicFeedbackId);
     dispatch(updatetopicfeedbackRequest(topicFeedbackId, requestBody));
+    handleCloseEditQuestionModal();
   };
 
   const validUpdatedQuestion = (event) => {
     event.preventDefault();
-    debugger;
     handleUpdateQuestion();
   };
   const handleOpenEditQuestionModal = async (TopicFeedbackQuestionId) => {
     // setShowEditfbQuestionModal(true);
-    debugger;
 
     dispatch(fetchtopicfeedbackRequest(TopicFeedbackQuestionId));
     await new Promise((resolve) => setTimeout(resolve, 100));
     console.log("ki", getfeedback);
-    debugger;
+
     if (getfeedback && getfeedback.options) {
       setShowEditfbQuestionModal(true);
       setEditedQuestion({
@@ -155,7 +154,7 @@ export const GetTopicFeedback = () => {
         questionType: getfeedback.questionType,
         options: getfeedback.options.map((options) => options.optionText),
       });
-      debugger;
+
       console.log(editedQuestion);
     }
   };
@@ -181,6 +180,23 @@ export const GetTopicFeedback = () => {
 
   return (
     <div>
+      <div>
+        <button
+          class="btn btn-light"
+          style={{
+            marginLeft: "95%",
+            marginTop: "5%",
+            backgroundColor: "#365486",
+            color: "white",
+            width: "50",
+          }}
+          onClick={() => {
+            handleNavigate();
+          }}
+        >
+          Back
+        </button>
+      </div>
       <TopicFeedback />
       <div className="question template container">
         <div>
@@ -356,10 +372,10 @@ export const GetTopicFeedback = () => {
           )}
         </Modal.Body>
         <Modal.Footer style={{ backgroundColor: "rgb(237, 231, 231)" }}>
-          <Button variant="secondary" onClick={handleCloseEditQuestionModal}>
+          <Button variant="default" onClick={handleCloseEditQuestionModal}>
             Close
           </Button>
-          <Button variant="primary" onClick={validUpdatedQuestion}>
+          <Button variant="default" onClick={validUpdatedQuestion}>
             Save Changes
           </Button>
         </Modal.Footer>
@@ -367,5 +383,4 @@ export const GetTopicFeedback = () => {
     </div>
   );
 };
-
 export default GetTopicFeedback;

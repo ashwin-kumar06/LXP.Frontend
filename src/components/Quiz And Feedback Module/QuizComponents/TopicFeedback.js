@@ -9,15 +9,15 @@ import { createtopicRequest } from "../../../actions/Quiz And Feedback Module/To
 import { useLocation } from 'react-router-dom';
  
 export const TopicFeedback = () => {
-    const location = useLocation();
+
+  const topicId = sessionStorage.getItem('topicId');
+    console.log("topic feed",topicId);
     const [errorfb, setErrorfb] = useState('');
     const [loading, setLoading] = useState('');
     const [showAddfbModal, setShowAddfbModal] = useState(false);
-    const searchParams = new URLSearchParams(location.search);
-    const topicId = searchParams.get('topicId');
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+ 
     const handleSubmit = () => {
         try {
               // await GetAllQuestion();
@@ -83,7 +83,7 @@ export const TopicFeedback = () => {
  
     const handleCloseAddfbQuestionModal = () => {
         setShowAddfbModal(false);
-        window.location.reload();
+        // window.location.reload();
     };
     const handleChange = (index, field, value) => {
         const updatedoptions = [...fbQuestion.options];
@@ -105,15 +105,17 @@ export const TopicFeedback = () => {
             options: [],
         }));
     };  
-
-
+ 
+ 
     return (
         <div>
             <AdminNavbar />
             <div>
             <div>
-            <h4 style={{marginLeft:"10%" , marginTop:"-40%"}}> <b>Add Feedback Question for the Topic </b></h4>
-            <button onClick={handleOpenAddfbQuestionModal} className="btn btn-light mt-3 mb-5 float-right" style={{backgroundColor:"#365486", color:"white",marginLeft:"45%"}}>Add More Feedback Questions</button>
+            <h4 className="text" style={{marginLeft:"10%" , marginTop:"-40%"}}><b>Feedback Questions for the Topic</b></h4>
+            <button onClick={handleOpenAddfbQuestionModal} className="btn btn-light mt-3 mb-5 float-right" style={{backgroundColor:"#365486", color:"white",marginLeft:"43%"}}>Add Feedback Questions</button>
+            {/* <h4 style={{marginLeft:"10%" , marginTop:"-40%"}}> <b>Add Feedback Question for the Topic </b></h4>
+            <button onClick={handleOpenAddfbQuestionModal} className="btn btn-light mt-3 mb-5 float-right" style={{backgroundColor:"#365486", color:"white",marginLeft:"45%"}}>Add More Feedback Questions</button> */}
             </div>
            
             <Modal show={showAddfbModal} onHide={handleCloseAddfbQuestionModal}>
@@ -171,5 +173,4 @@ export const TopicFeedback = () => {
         </div>
     )
 }
- 
 export default TopicFeedback

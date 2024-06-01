@@ -9,14 +9,12 @@ import { createquizfeedbackRequest } from "../../../actions/Quiz And Feedback Mo
 import ReviewQuestions from "../../../components/Quiz And Feedback Module/QuizComponents/ReviewQuestions";
 
 export const QuizFeedback = () => {
-  const location = useLocation();
   const [errorfb, setErrorfb] = useState("");
   const [loading, setLoading] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
   const [showAddfbModal, setShowAddfbModal] = useState(false);
-  const searchParams = new URLSearchParams(location.search);
-  const quizId = searchParams.get("quizId");
-  const topicId = searchParams.get("topicId");
+  const quizId = sessionStorage.getItem("quizId");
+  console.log("quiz feed", quizId);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleSubmit = () => {
@@ -118,7 +116,7 @@ export const QuizFeedback = () => {
   };
 
   const handleNavigate = () => {
-    navigate(`/reviewquestions?quizId=${quizId}&topicId=${topicId}`);
+    navigate(`/reviewquestions`);
   };
 
   return (
@@ -264,6 +262,5 @@ export const QuizFeedback = () => {
       </div>
     </div>
   );
-};
-
+}
 export default QuizFeedback;

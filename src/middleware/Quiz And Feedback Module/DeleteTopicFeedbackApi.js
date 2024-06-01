@@ -1,13 +1,11 @@
-
 import React from "react";
 
 import axios from "axios";
-// import {
-//   DELETE_TOPICFEEDBACK_REQUEST,
-//   deletetopicfeedbackSuccess,
-//   deletetopicfeedbackFailure,
-// } from "../actions/DeleteTopicFeedbackAction";
-import { DELETE_TOPICFEEDBACK_REQUEST,deletetopicfeedbackSuccess,deletetopicfeedbackFailure } from "../../actions/Quiz And Feedback Module/DeleteTopicFeedbackAction";
+import {
+  DELETE_TOPICFEEDBACK_REQUEST,
+  deletetopicfeedbackSuccess,
+  deletetopicfeedbackFailure,
+} from "../../actions/Quiz And Feedback Module/DeleteTopicFeedbackAction";
 
 export const DeleteTopicFeedbackApi =
   ({ dispatch }) =>
@@ -21,7 +19,7 @@ export const DeleteTopicFeedbackApi =
         // Assuming 'action.payload' contains the data you want to senda
         const response = await axios.delete(API_URL);
         console.log("Delete topic feedback API Response:", response.data); // Log the response data
-        dispatch(deletetopicfeedbackSuccess(response.data.data)); // Dispatch success action with the response data
+        dispatch(deletetopicfeedbackSuccess(response.data)); // Dispatch success action with the response data
       } catch (error) {
         console.error("API Error:", error.message);
         dispatch(deletetopicfeedbackFailure(error.message));
@@ -30,6 +28,4 @@ export const DeleteTopicFeedbackApi =
     return next(action);
   };
 
-
-
-export default DeleteTopicFeedbackApi
+export default DeleteTopicFeedbackApi;

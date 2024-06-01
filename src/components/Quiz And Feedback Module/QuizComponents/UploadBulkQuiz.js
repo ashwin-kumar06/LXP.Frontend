@@ -13,28 +13,26 @@ import { Button } from 'react-bootstrap';
 import { FcInfo } from "react-icons/fc";
 
 const UploadBulkQuiz = () => {
-
   const dispatch = useDispatch();
-  const topicId = sessionStorage.getItem('topicId');
+  const topicId = sessionStorage.getItem("topicId");
   const [files, setFiles] = useState(undefined);
   const inputref = useRef();
   const navigate = useNavigate();
   const [importedQuestions, setImportedQuestions] = useState([]);
-  const allowedFileTypes = ['.xlsx'];
-
+  const allowedFileTypes = [".xlsx"];
 
   useEffect(() => {
-    fetchQuizId(topicId)
-  })
+    fetchQuizId(topicId);
+  });
 
   const fetchQuizId = async (topicId) => {
     dispatch(fetchQuizIdRequest(topicId));
     // setQuizId(response);
-  }
+  };
 
   const quizId = useSelector((state) => state.quizId.quizId);
-  console.log("upload page",quizId);
-  sessionStorage.setItem('quizId',quizId);
+  console.log("upload page", quizId);
+  sessionStorage.setItem("quizId", quizId);
 
   const handleDragOver = (event) => {
     event.preventDefault();
@@ -47,15 +45,21 @@ const UploadBulkQuiz = () => {
 
   const handleDrop = (event) => {
     event.preventDefault();
-    setFiles(event.dataTransfer.files)
+    setFiles(event.dataTransfer.files);
   };
 
   const validateFiles = (files) => {
-    const selectedFileNames = Array.from(files).map(file => file.name);
-    const invalidFiles = selectedFileNames.filter(fileName => !allowedFileTypes.some(type => fileName.endsWith(type)));
+    const selectedFileNames = Array.from(files).map((file) => file.name);
+    const invalidFiles = selectedFileNames.filter(
+      (fileName) => !allowedFileTypes.some((type) => fileName.endsWith(type))
+    );
 
     if (invalidFiles.length > 0) {
-      alert(`Invalid file types: ${invalidFiles.join(', ')}. Please select .xlsx file`);
+      alert(
+        `Invalid file types: ${invalidFiles.join(
+          ", "
+        )}. Please select .xlsx file`
+      );
     } else {
       setFiles(files);
     }
@@ -63,15 +67,15 @@ const UploadBulkQuiz = () => {
 
   const handleFileUpload = async (e) => {
     e.preventDefault();
-    console.log("handleFileUpload: ", quizId)
+    console.log("handleFileUpload: ", quizId);
     BulkUploadQuestion(files, quizId);
-    navigate(`/createquiz`)
+    navigate(`/createquiz`);
   };
   return (
     <>
       <AdminNavbar />
       <div id="uploadContent">
-        <h5 id="heading" style={{ marginTop: "-40%", marginLeft: "25%" }}>
+        <h5 id="heading" style={{ marginTop: "-38%", marginLeft: "25%" }}>
           Upload Question from device{" "}
         </h5>
         <div id="dropzone" onDragOver={handleDragOver} onDrop={handleDrop}>
@@ -104,7 +108,7 @@ const UploadBulkQuiz = () => {
           {files ? (
             <>
               <div>
-                <h5 id="heading">Selected File </h5>
+                <h5 id="heading">Selected File</h5>
                 {Array.from(files).map((file, idx) => (
                   <p key={idx}>{file.name}</p>
                 ))}
@@ -143,5 +147,4 @@ const UploadBulkQuiz = () => {
     </>
   );
 };
-
 export default UploadBulkQuiz

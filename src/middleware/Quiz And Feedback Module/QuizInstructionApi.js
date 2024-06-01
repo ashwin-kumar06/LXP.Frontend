@@ -2,7 +2,7 @@ import {
   FETCH_QUIZINSTRUCTION_REQUEST,
   fetchQuizInstructionSuccess,
   fetchQuizInstructionFailure,
-} from "../actions/QuizInstructionAction";
+} from "../../actions/Quiz And Feedback Module/QuizInstructionAction";
 import axios from "axios";
 
 // const API_URL = `http://localhost:5199/api/QuizEngine/topic/${action.payload}/quiz`;
@@ -14,9 +14,7 @@ export const QuizInstructionApi =
     if (action.type === FETCH_QUIZINSTRUCTION_REQUEST) {
       try {
         console.log("QuizInstruction", action.payload);
-        const response = await axios.get(
-          `http://localhost:5199/api/QuizEngine/topic/${action.payload}/quiz`
-        );
+        const response = await axios.get(`http://localhost:5199/api/QuizEngine/topic/${action.payload}/quiz`);
         console.log("Get Quiz Details API Response:", response.data);
         dispatch(fetchQuizInstructionSuccess(response.data));
       } catch (error) {

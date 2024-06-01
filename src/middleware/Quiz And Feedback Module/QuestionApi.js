@@ -1,22 +1,18 @@
+
 import axios from 'axios';
 import  { useState } from 'react';
-import {
-  fetchQuestionsFailure,
-  fetchQuestionsRequest,
-  fetchQuestionsSuccess,
-} from "../../actions/Quiz And Feedback Module/GetAllQuestionAction";
+import { fetchQuestionsFailure, fetchQuestionsRequest, fetchQuestionsSuccess } from '../../actions/Quiz And Feedback Module/GetAllQuestionAction';
 import { useLocation } from 'react-router-dom';
-// import { DELETE_QUIZ_QUESTION_REQUEST, deleteQuizQuestionSuccess,deleteQuizQuestionFailure } from '../actions/DeleteQuizQuestionAction';
-// import { UPDATE_QUIZ_QUESTION_REQUEST,updateQuizQuestionSuccess,updateQuizQuestionFailure } from '../actions/UpdateQuizQuestionAction';
-import { DELETE_QUIZ_QUESTION_REQUEST, deleteQuizQuestionSuccess, deleteQuizQuestionFailure } from '../../actions/Quiz And Feedback Module/DeleteQuizQuestionAction';
+import { DELETE_QUIZ_QUESTION_REQUEST, deleteQuizQuestionSuccess,deleteQuizQuestionFailure } from '../../actions/Quiz And Feedback Module/DeleteQuizQuestionAction';
 import { UPDATE_QUIZ_QUESTION_REQUEST,updateQuizQuestionSuccess,updateQuizQuestionFailure } from '../../actions/Quiz And Feedback Module/UpdateQuizQuestionAction';
-
+ 
+ 
 export const BulkUploadQuestion = async (files,quizId) => {
     if(files && files.length>0){
         const file = files[0];
       const formData = new FormData();
       formData.append('file', file);
-  
+ 
       try {
         const response = await axios.post(`http://localhost:5199/api/BulkQuestion/ImportQuizData?quizId=${quizId}`, formData, {
           headers: {
@@ -31,17 +27,17 @@ export const BulkUploadQuestion = async (files,quizId) => {
         console.log("no file")
       }
 };
-
+ 
 export const GetOpenEditQuestionModal = async(quizQuestionId) =>{
   try {
     const response = await axios.get(`http://localhost:5199/api/QuizQuestions/GetQuestionById?quizQuestionId=${quizQuestionId}`);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("Error:", error.message);
     throw error.message;
   }
 }
-
+ 
 export const DeleteQuizQuestionsApi = ({ dispatch }) => (next) => async (action) => {
   if (action.type === DELETE_QUIZ_QUESTION_REQUEST) {
       try {
@@ -56,14 +52,14 @@ export const DeleteQuizQuestionsApi = ({ dispatch }) => (next) => async (action)
   }
   return next(action);
 }
-
+ 
 export const UpdateQuizQuestionsApi = ({ dispatch }) => (next) => async (action) => {  
   if (action.type === UPDATE_QUIZ_QUESTION_REQUEST) {
       try {
           console.log("updatingting questionId", action.payload.quizQuestionId);
           const response = await axios.put(`http://localhost:5199/api/QuizQuestions/UpdateQuestion?quizQuestionId=${action.payload.quizQuestionId}`,action.payload);
           console.log("update api questions:",response.data);
-          dispatch(updateQuizQuestionSuccess(response.data));
+          dispatch(updateQuizQuestionSuccess(response.data.data));
       } catch (error) {
           console.log("Error fetching question: ", error.message);
           dispatch(updateQuizQuestionFailure(error.message));
@@ -71,13 +67,13 @@ export const UpdateQuizQuestionsApi = ({ dispatch }) => (next) => async (action)
   }
   return next(action);
 }
-
-
+ 
+ 
 export const PostSingleQuestion = async(requestBody) =>{
   console.log("single question: ",requestBody)
   try {
     const response = await axios.post('http://localhost:5199/api/QuizQuestions/AddQuestion', requestBody);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("Error:", error.message);
     throw error.message;

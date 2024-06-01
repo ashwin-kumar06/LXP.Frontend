@@ -1,23 +1,23 @@
 
+ 
 import React from "react";
-
+ 
 import axios from "axios";
-// import {
-//   FETCH_TOPICFEEDBACK_REQUEST,
-//   fetchtopicfeedbackSuccess,
-//   fetchtopicfeedbackFailure,
-// } from "../actions/GetByIDTopicFeedbackAction";
-import { FETCH_TOPICFEEDBACK_REQUEST,fetchtopicfeedbackSuccess,fetchtopicfeedbackFailure } from "../../actions/Quiz And Feedback Module/GetByIDTopicFeedbackAction";
-
+import {
+  FETCH_TOPICFEEDBACK_REQUEST,
+  fetchtopicfeedbackSuccess,
+  fetchtopicfeedbackFailure,
+} from "../../actions/Quiz And Feedback Module/GetByIDTopicFeedbackAction";
+ 
 const API_URL = "http://localhost:5199/api/TopicFeedback";
-
+ 
 export const GetByIDTopicFeedbackApi =
   ({ dispatch }) =>
   (next) =>
   async (action) => {
     if (action.type == FETCH_TOPICFEEDBACK_REQUEST) {
       try {
-        debugger;
+       
         console.log("fetch topic feedback", action.payload);
         // Assuming 'action.payload' contains the data you want to senda
         const url = `${API_URL}/${action.payload}`;
@@ -31,9 +31,10 @@ export const GetByIDTopicFeedbackApi =
     }
     return next(action);
   };
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
 export default GetByIDTopicFeedbackApi
+ 

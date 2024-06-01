@@ -1,9 +1,11 @@
-
-import React from 'react'
+import React from "react";
 
 import axios from "axios";
-// import { UPDATE_TOPICFEEDBACK_REQUEST,updatetopicfeedbackSuccess,updatetopicfeedbackFailure } from '../actions/UpdateTopicFeedbackAction';
-import { UPDATE_TOPICFEEDBACK_REQUEST,updatetopicfeedbackSuccess,updatetopicfeedbackFailure } from '../../actions/Quiz And Feedback Module/UpdateTopicFeedbackAction';
+import {
+  UPDATE_TOPICFEEDBACK_REQUEST,
+  updatetopicfeedbackSuccess,
+  updatetopicfeedbackFailure,
+} from "../../actions/Quiz And Feedback Module/UpdateTopicFeedbackAction";
 
 export const UpdateTopicFeedbackApi =
   ({ dispatch }) =>
@@ -27,8 +29,4 @@ export const UpdateTopicFeedbackApi =
     return next(action);
   };
 
-
-
-
-
-export default UpdateTopicFeedbackApi
+export default UpdateTopicFeedbackApi;

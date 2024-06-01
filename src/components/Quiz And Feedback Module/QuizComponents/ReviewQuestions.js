@@ -19,7 +19,8 @@ import { Alert } from 'react-bootstrap';
 
 export const ReviewQuestions = () => {
 
-    const [selectedQuestion, setSelectedQuestion] = useState(null);
+  
+const [selectedQuestion, setSelectedQuestion] = useState(null);
     const location = useLocation();
     const [error, setError] = useState('');
     const [errorfb, setErrorfb] = useState('');
@@ -32,7 +33,7 @@ export const ReviewQuestions = () => {
     const topicId = sessionStorage.getItem('topicId');
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+ 
     const handleSubmit = () => {
         try {
             // await GetAllQuestion();
@@ -41,37 +42,37 @@ export const ReviewQuestions = () => {
         } catch (error) {
             console.error('Error fetching data:', error)
         }
-
+ 
     };
-
+ 
     const [fbQuestion, setFbQuestion] = useState({
         question: '',
         questionType: '',
         options: ['', '', '', '', '', '', '', ''],
-
+ 
     });
     const [selectedfbType, setSelectedfbType] = useState('');
-
+ 
     // const [questions, setQuestions] = useState([]);
-
+ 
     useEffect(() => {
         fetchQuestions(quizId);
     }, []);
-
+ 
     const fetchQuestions = async (quizId) => {
-
+ 
         try {
             dispatch(fetchAllQuizQuestionRequest(quizId));
-
+ 
         } catch (error) {
             console.error('Error fetching data:', error)
         }
     }
-
+ 
     const questions = useSelector((state) => state.quizQuestions.quizQuestions);
     const loading = useSelector((state) => state.quizQuestions.loading);
     const selector = useSelector((state) => state.quizQuestions);
-
+ 
     const handleFeedback = () => {
         try {
             navigate(`/quizfeedback`);
@@ -79,10 +80,10 @@ export const ReviewQuestions = () => {
             console.error('Error navigating:', error);
         }
     };
-
+ 
     const handleSaveQuestion = () => {
         let tempfbErrors = { question: '', questionType: '', optionText: '' };
-
+ 
         if (!fbQuestion.question) {
             tempfbErrors.question = 'Question is required';
         }
@@ -92,13 +93,13 @@ export const ReviewQuestions = () => {
         if (fbQuestion.options.length === 0 && fbQuestion.questionType == "MCQ") {
             tempfbErrors.optionText = 'At least one option is required';
         }
-
+ 
         setErrorfb(tempfbErrors);
-
+ 
         if (tempfbErrors.question || tempfbErrors.questionType || tempfbErrors.optionText) {
             return;
         }
-
+ 
         const requestBody = {
             quizId: quizId,
             question: fbQuestion.question,
@@ -112,18 +113,18 @@ export const ReviewQuestions = () => {
         dispatch(createquizfeedbackRequest(requestBody));
         handleCloseAddfbQuestionModal();
     };
-
+ 
     const handleOpenAddfbQuestionModal = () => {
         setShowAddfbModal(true);
     };
     const handleTypeChange = () => {
         setShowAddModal(true);
     };
-
+ 
     const handleOpenModal = () => {
         setShowAddModal(true);
     };
-
+ 
     const handleCloseModal = () => {
         setShowAddModal(false);
     };
@@ -134,15 +135,15 @@ export const ReviewQuestions = () => {
         const updatedoptions = [...fbQuestion.options];
         updatedoptions[index] = value;
         setFbQuestion({ ...fbQuestion, options: updatedoptions });
-
-
+ 
+ 
         setFbQuestion(prevState => ({
             ...prevState,
             [field]: index === -1 ? value : [...prevState[field].slice(0, index), value, ...prevState[field].slice(index + 1)]
         }));
         // }
     };
-
+ 
     const handlefbQuestionTypeChange = (e) => {
         const value = e.target.value;
         setSelectedfbType(value);
@@ -152,7 +153,7 @@ export const ReviewQuestions = () => {
             options: [],
         }));
     };
-
+ 
     const handleSelectQuestion = (index) => {
         setSelectedQuestion(index);
         // Scroll to the question details
@@ -161,15 +162,15 @@ export const ReviewQuestions = () => {
             questionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     };
-
+ 
     const handleNavigate = () => {
         navigate(`/createquiz`);
     }
-
-
+ 
+ 
     return (
         <div>
-            <button class="btn btn-light" style={{ marginLeft: "95%", marginTop: "5%", backgroundColor: "#365486", color: "white", width: '50' }} onClick={() => { handleNavigate() }} >Back</button>
+            <button class="btn btn-light" style={{ marginLeft: "95%", marginTop: "5%", backgroundColor: "#365486", color: "white", width: '50' }} onClick={() => { handleNavigate() }}>Back</button>
             <div>
                 <Row>
                     <AdminNavbar />
@@ -222,12 +223,12 @@ export const ReviewQuestions = () => {
                                         </div>
                                     ))}
                                     <button onClick={handleSubmit} className="btn btn-light mt-3 mb-5 float-right" style={{ backgroundColor: "#365486", color: "white" }}>Go to Edit Page</button>
-                                    <button onClick={handleTypeChange} className="btn btn-light mt-1 mb-5 float-right" style={{ backgroundColor: "#365486", color: "white", marginLeft: "70%" }}>Review & Publish</button>
+                                    <button onClick={handleTypeChange} className="btn btn-light mb-5 float-right" style={{ backgroundColor: "#365486", color: "white", marginLeft: "80%" , marginTop:"-15%"}}>Review & Publish</button>
                                 </div>
                             )}
                         </div>
                     </Container>
-
+ 
                     <div>
                         <Modal show={showAddfbModal} onHide={handleCloseAddfbQuestionModal}>
                             <Modal.Header closeButton>
@@ -243,7 +244,7 @@ export const ReviewQuestions = () => {
                                     </select>
                                     {errorfb.questionType && <div style={{ color: "red" }}>{errorfb.questionType}</div>}
                                 </div>
-
+ 
                                 {selectedfbType === 'MCQ' && (
                                     <>
                                         <div className="form-group">
@@ -273,10 +274,10 @@ export const ReviewQuestions = () => {
                             <Modal.Footer style={{ backgroundColor: "rgb(237, 231, 231)" }}>
                                 <Button variant="secondary" onClick={handleCloseAddfbQuestionModal}>Close</Button>
                                 <Button variant="primary" onClick={() => { handleSaveQuestion() }}>Save</Button>
-
+ 
                             </Modal.Footer>
                         </Modal>
-
+ 
                         <Modal show={showAddModal} onHide={handleCloseModal}>
                             <Modal.Header closeButton style={{ backgroundColor: "#23275c" }}>
                             </Modal.Header>
@@ -286,17 +287,15 @@ export const ReviewQuestions = () => {
                             <Modal.Footer style={{ backgroundColor: "rgb(237, 231, 231)" }}>
                                 <Button onClick={handleFeedback} className="btn btn-light mt-3 mb-5 " style={{ backgroundColor: "#365486", color: "white", marginLeft: "-10%" }}>Add Feedback</Button>
                                 <Button className="btn btn-light mt-3 mb-5" style={{ backgroundColor: "#365486", color: "white", marginLeft: "55%" }} onClick={handleCloseModal}>Close</Button>
-
+ 
                             </Modal.Footer>
                         </Modal>
                     </div>
                 </div>
             </div>
         </div>
-
+ 
     );
 };
-
-
 
 export default ReviewQuestions

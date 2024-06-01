@@ -19,7 +19,7 @@ function QuizInstruction() {
   const navigate = useNavigate();
   const topicId = sessionStorage.getItem("topicId");
   const quizinstructions = useSelector(
-    (state) => state.fetchquizinstructions.quizinstructiondetails
+    (state) => state.fetchquizinstruction.quizinstructiondetails
   );
   const divStyle = {
     boxShadow: "0px 4px 8px #23275c",
@@ -136,5 +136,4 @@ function QuizInstruction() {
     </div>
   );
 }
-
 export default QuizInstruction;

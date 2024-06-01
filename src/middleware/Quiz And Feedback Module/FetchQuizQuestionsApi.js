@@ -1,7 +1,7 @@
-// import { FETCH_ALL_QUIZ_QUESTION_REQUEST, fetchAllQuizQuestionSuccess, fetchAllQuizQuestionFailure } from '../actions/FetchQuizQuestionsAction';
-import { FETCH_ALL_QUIZ_QUESTION_REQUEST,fetchAllQuizQuestionSuccess,fetchAllQuizQuestionFailure } from '../../actions/Quiz And Feedback Module/FetchQuizQuestionsAction';
-import axios from 'axios';
 
+import { FETCH_ALL_QUIZ_QUESTION_REQUEST, fetchAllQuizQuestionSuccess, fetchAllQuizQuestionFailure } from '../../actions/Quiz And Feedback Module/FetchQuizQuestionsAction';
+import axios from 'axios';
+ 
 export const FetchQuizQuestionsApi = ({ dispatch }) => (next) => async (action) => {
     if (action.type === FETCH_ALL_QUIZ_QUESTION_REQUEST) {
         try {

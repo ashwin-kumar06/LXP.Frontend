@@ -1,13 +1,9 @@
-
-
 import axios from "axios";
-// import {
-//   FETCH_QUIZFEEDBACK_REQUEST,
-//   fetchquizfeedbackSuccess,
-//   fetchquizfeedbackFailure,
-// } from "../actions/GetByIDFeedbackAction";
-import { FETCH_QUIZFEEDBACK_REQUEST,fetchquizfeedbackSuccess,fetchquizfeedbackFailure } from "../../actions/Quiz And Feedback Module/GetByIDFeedbackAction";
-
+import {
+  FETCH_QUIZFEEDBACK_REQUEST,
+  fetchquizfeedbackSuccess,
+  fetchquizfeedbackFailure,
+} from "../../actions/Quiz And Feedback Module/GetByIDFeedbackAction";
 const API_URL =
   "http://localhost:5199/api/QuizFeedback/GetFeedbackQuestionById";
 
@@ -23,7 +19,6 @@ export const GetByIDFeedbackApi =
         const response = await axios.get(url);
         console.log("Get API Response:", response.data); // Log the response data
         dispatch(fetchquizfeedbackSuccess(response.data.data)); // Dispatch success action with the response data
-        debugger;
       } catch (error) {
         console.error("API Error:", error.message);
         dispatch(fetchquizfeedbackFailure(error.message));
@@ -32,5 +27,4 @@ export const GetByIDFeedbackApi =
     return next(action);
   };
 
-
-export default GetByIDFeedbackApi
+export default GetByIDFeedbackApi;

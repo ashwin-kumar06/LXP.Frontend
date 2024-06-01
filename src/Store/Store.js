@@ -34,6 +34,10 @@ import DeleteQuizFeedbackReducer from "../reducers/Quiz And Feedback Module/Dele
 import DeleteTopicFeedbackReducer from "../reducers/Quiz And Feedback Module/DeleteTopicFeedbackReducer";
 import UpdateTopicFeedbackReducer from "../reducers/Quiz And Feedback Module/UpdateTopicFeedbackReducer";
 import GetByIDTopicFeedbackReducer from "../reducers/Quiz And Feedback Module/GetByIDTopicFeedbackReducer";
+import AttemptQuizReducer from "../reducers/Quiz And Feedback Module/AttemptQuizReducer";
+import fetchQuestionsMiddleware from "../middleware/Quiz And Feedback Module/AttemptQuizApi";
+import QuizInstructionReducer from "../reducers/Quiz And Feedback Module/QuizInstructionReducer";
+import { QuizInstructionApi } from "../middleware/Quiz And Feedback Module/QuizInstructionApi";
 
 export const rootReducer = combineReducers({
   quizId: quizIdReducer,
@@ -51,6 +55,8 @@ export const rootReducer = combineReducers({
   deletetopicfeedback: DeleteTopicFeedbackReducer,
   updatetopicfeedback: UpdateTopicFeedbackReducer,
   fetchtopicfeedbackid: GetByIDTopicFeedbackReducer,
+  AttemptQuiz: AttemptQuizReducer,
+  fetchquizinstruction:QuizInstructionReducer
 });
 
 const store = createStore(
@@ -71,7 +77,9 @@ const store = createStore(
    DeleteTopicFeedbackApi,
   DeleteQuizFeedbackApi,
   UpdateTopicFeedbackApi,
-   GetByIDTopicFeedbackApi,
+    GetByIDTopicFeedbackApi,
+    fetchQuestionsMiddleware,
+    QuizInstructionApi
   )
 );
 

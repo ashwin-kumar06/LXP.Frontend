@@ -25,9 +25,8 @@ export const GetAllFeedbacks = () => {
   const [errors, setErrors] = useState("");
   const [showEditfbQuestionModal, setShowEditfbQuestionModal] = useState(false);
   // const selectorState = useSelector((state) => state.fetchquizfeedbackid);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const quizId = searchParams.get("quizId");
+  const quizId = sessionStorage.getItem("quizId");
+  console.log("edit feed", quizId);
   // const [showAddQuestionModal, setShowAddQuestionModal] = useState(false);
   // const [showQuizEditModal, setShowQuizEditModal] = useState(false);
   // const [showQuizDeleteModal, setShowQuizDeleteModal] = useState(false);
@@ -46,11 +45,9 @@ export const GetAllFeedbacks = () => {
 
   //  const [selectedfbType, setSelectedfbType] = useState('');
 
-  console.log("hi", getfeedback);
-
   useEffect(() => {
-    dispatch(fetchallquizfeedbackRequest(quizfeedbackId));
-  }, [quizfeedbackId]);
+    dispatch(fetchallquizfeedbackRequest(quizId));
+  }, [quizId]);
 
   const handleSaveQuestion = () => {
     let tempfbErrors = { question: "", questionType: "", optionText: "" };
@@ -132,7 +129,7 @@ export const GetAllFeedbacks = () => {
   };
 
   const handleUpdateQuestion = () => {
-    const { quizFeedbackQuestionId, questionType, quizId, ...updatedQuestion } =
+    const { quizFeedbackQuestionId, questionType, ...updatedQuestion } =
       editedQuestion;
     const updatedOptions = updatedQuestion.options.map((optionText, index) => ({
       optionText,
@@ -145,7 +142,6 @@ export const GetAllFeedbacks = () => {
       options: updatedOptions,
     };
     console.log("requestBody", requestBody);
-    console.log("quizre", quizFeedbackQuestionId);
     //   if (validateUpdateQuestion()) {
     dispatch(updatequizfeedbackRequest(quizFeedbackQuestionId, requestBody));
     //       handleCloseEditQuestionModal();

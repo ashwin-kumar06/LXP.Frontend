@@ -2,12 +2,13 @@ import {
   FETCH_QUIZINSTRUCTION_REQUEST,
   FETCH_QUIZINSTRUCTION_SUCCESS,
   FETCH_QUIZINSTRUCTION_FAILURE,
-} from "../actions/QuizInstructionAction";
+} from "../../actions/Quiz And Feedback Module/QuizInstructionAction";
 
 const initialState = {
   quizinstructiondetails: [],
   error: null,
   loading: false,
+  isSubmitted: false,
 };
 
 const QuizInstructionReducer = (state = initialState, action) => {
@@ -22,6 +23,7 @@ const QuizInstructionReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         quizinstructiondetails: action.payload,
+        isSubmitted: true,
         error: null,
       };
 

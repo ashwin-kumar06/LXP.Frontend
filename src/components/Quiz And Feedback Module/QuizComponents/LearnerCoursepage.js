@@ -6,17 +6,19 @@ import { IoLogoHtml5 } from "react-icons/io5";
 import { PiFileCssFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchQuizIdRequest } from "../../../actions/Quiz And Feedback Module/FetchQuizIdAction";
+import { fetchQuizInstructionRequest } from "../../../actions/Quiz And Feedback Module/QuizInstructionAction";
 
 function LearnerCoursepage() {
   const [noQuizTopicId, setNoQuizTopicId] = useState(
-    "126d324f-4677-4234-964e-197579b7b4c0"
+    "0d3d682d-56e2-4639-a83f-08d51efbc640"
   );
   const [yesQuizTopicId, setYesQuizTopicId] = useState(
-    "e3a895e4-1b3f-45b8-9c0a-98f9c0fa4996"
+    "0d3d682d-56e2-4639-a83f-08d51efbc640"
   );
-  const quizId = useSelector((state) => state.quizId.quizId);
-  const isSuccess = useSelector((state) => state.quizId.isSubmitted);
+  const quizId = useSelector(
+    (state) => state.fetchquizinstruction.quizinstructiondetails
+  );
+  const isSuccess = useSelector((state) => state.fetchquizinstruction.isSubmitted);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [topicId, setTopicId] = useState("");
@@ -24,13 +26,13 @@ function LearnerCoursepage() {
   console.log("course page quizId", quizId, isSuccess);
 
   const handleAddQuiz = async (topicId) => {
-    console.log("handleAddQuiz called with topicId:", topicId);
+    console.log("handleAttemptQuiz called with topicId:", topicId);
     setTopicId(topicId);
-    dispatch(fetchQuizIdRequest(topicId));
+    dispatch(fetchQuizInstructionRequest(topicId));
     sessionStorage.setItem("topicId", topicId);
     sessionStorage.setItem("quizId", quizId);
     if (isSuccess) {
-      navigate(`/instruction`);
+      navigate("/instruction");
     }
   };
 
@@ -130,5 +132,4 @@ function LearnerCoursepage() {
     </div>
   );
 }
-
 export default LearnerCoursepage;

@@ -11,10 +11,10 @@ import { fetchQuizIdRequest } from "../../../actions/Quiz And Feedback Module/Fe
 
 function CoursePage() {
   const [noQuizTopicId, setNoQuizTopicId] = useState(
-    "126d324f-4677-4234-964e-197579b7b4c0"
+    "0d3d682d-56e2-4639-a83f-08d51efbc640"
   );
   const [yesQuizTopicId, setYesQuizTopicId] = useState(
-    "e3a895e4-1b3f-45b8-9c0a-98f9c0fa4996"
+    "af6ff125-3b3c-48fd-89e5-00463924e146"
   );
   const quizId = useSelector((state) => state.quizId.quizId);
   const isSuccess = useSelector((state) => state.quizId.isSubmitted);
@@ -37,19 +37,28 @@ function CoursePage() {
 
   const handleFeedback = (topicId) => {
     try {
-      navigate(`/topicfeedback?topicId=${topicId}`);
+      sessionStorage.setItem("topicId", topicId);
+      navigate(`/topicfeedback`);
     } catch (error) {
       console.error("Error navigating:", error);
     }
   };
 
   const handleQuizFeedback = async (topicId) => {
-    try {
-      // dispatch(fetchQuizById(topicId));
-      // setQuizId(id);
-      // navigate(`/quizfeedback?quizId=${id}&topicId=${topicId}`);
-    } catch (error) {
-      console.error("Error navigating:", error);
+    // try {
+    //   dispatch(fetchQuizIdRequest(topicId));
+
+    //   navigate(`/quizfeedback`);
+    // } catch (error) {
+    //   console.error('Error navigating:', error);
+    // }
+    console.log("handleAddQuiz called with topicId:", topicId);
+    setTopicId(topicId);
+    dispatch(fetchQuizIdRequest(topicId));
+    sessionStorage.setItem("topicId", topicId);
+    sessionStorage.setItem("quizId", quizId);
+    if (isSuccess) {
+      navigate(`/quizfeedback`);
     }
   };
 

@@ -1,13 +1,11 @@
-
 import React from "react";
 
 import axios from "axios";
-// import {
-//   UPDATE_QUIZFEEDBACK_REQUEST,
-//   updatequizfeedbackSuccess,
-//   updatequizfeedbackFailure,
-// } from "../actions/UpdateQuizFeedbackAction";
-import { UPDATE_QUIZFEEDBACK_REQUEST,updatequizfeedbackSuccess,updatequizfeedbackFailure } from "../../actions/Quiz And Feedback Module/UpdateQuizFeedbackAction";
+import {
+  UPDATE_QUIZFEEDBACK_REQUEST,
+  updatequizfeedbackSuccess,
+  updatequizfeedbackFailure,
+} from "../../actions/Quiz And Feedback Module/UpdateQuizFeedbackAction";
 
 export const UpdateQuizFeedbackApi =
   ({ dispatch }) =>
@@ -16,10 +14,7 @@ export const UpdateQuizFeedbackApi =
     if (action.type == UPDATE_QUIZFEEDBACK_REQUEST) {
       try {
         console.log("put act", action.payload);
-        const API_URL = `http://localhost:5199/api/QuizFeedback/UpdateFeedbackQuestion/${action.payload.quizquestionfeedbackid}`;
-
-        console.log("put quiz feedback", action.payload.formData);
-        // Assuming 'action.payload' contains the data you want to send
+        const API_URL = `http://localhost:5199/api/QuizFeedback/UpdateFeedbackQuestion/${action.payload.quizquestionfeedbackid}`; // Assuming 'action.payload' contains the data you want to send
         const response = await axios.put(API_URL, action.payload.formData);
         console.log("feed Put API Response:", response.data); // Log the response data
         dispatch(updatequizfeedbackSuccess(response.data.data)); // Dispatch success action with the response data
@@ -31,12 +26,4 @@ export const UpdateQuizFeedbackApi =
     return next(action);
   };
 
-
-
-export default UpdateQuizFeedbackApi
-
-
-
-
-
-
+export default UpdateQuizFeedbackApi;
