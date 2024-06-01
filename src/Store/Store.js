@@ -20,6 +20,8 @@ import updateQuizQuestionReducer from '../reducers/UpdateQuizQuestionReducer';
 import createQuizReducer from '../reducers/CreateQuizReducer';
 import AttemptQuizReducer from '../reducers/AttemptQuizReducer';
 import {fetchQuestionsMiddleware} from '../middleware/AttemptQuizApi';
+import reviewReducer from '../reducers/ReviewReducer';
+import reviewApi from '../middleware/ReviewApi';
 
 
 export const rootReducer = combineReducers({
@@ -28,9 +30,10 @@ export const rootReducer = combineReducers({
   deleteQuestion: deleteQuizQuestionsReducer,
   editQuizQuestion: updateQuizQuestionReducer,
   quiz: createQuizReducer,
-  AttemptQuiz: AttemptQuizReducer
+  AttemptQuiz: AttemptQuizReducer,
+  Review: reviewReducer
 });
 
-const store = createStore(rootReducer, applyMiddleware(thunk,FetchQuizById,FetchQuizQuestionsApi, DeleteQuizQuestionsApi, UpdateQuizQuestionsApi, CreateQuizApi,fetchQuestionsMiddleware));
+const store = createStore(rootReducer, applyMiddleware(thunk,FetchQuizById,FetchQuizQuestionsApi, DeleteQuizQuestionsApi, UpdateQuizQuestionsApi, CreateQuizApi,fetchQuestionsMiddleware,reviewApi));
  
 export default store;

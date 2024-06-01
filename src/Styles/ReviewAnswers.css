@@ -1,0 +1,33 @@
+/* ReviewQuestions.css */
+
+.review-container {
+    width: 100%;
+  }
+  
+  .question-container {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fafafa;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    height: 300px; /* Static height for the question container */
+    overflow-y: auto;
+  }
+  
+  .question-container h5 {
+    margin-bottom: 10px;
+  }
+  
+  .question-container ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .question-container li {
+    margin-bottom: 10px;
+  }
+  
+  input[type="radio"] {
+    margin-right: 10px;
+  }
